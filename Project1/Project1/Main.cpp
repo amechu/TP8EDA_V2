@@ -1,28 +1,30 @@
-#include "Page.h"
+#include "Menu.h"
+#include "allegroClass.h"
 #include "Parser.h"
 #include <iostream>
 
 int main(int argc, char*argv[]) {
 
 	Parser parser;
-
-	if (!parser.Read(argc, argv)){
-
+	Menu mainMenu;
 
 
+	mainMenu.setParserError(parser.Read(argc, argv));
+	mainMenu.setFilesystemError(fileReader.load(parser.getPath()));
 
+	if (mainMenu.getParserError()) {
 
+		allegro_c allClass;
+		allClass.load_music(BACKGROUNDMUSIC);
+		allClass.play_music();
 
-
-
-
-	}
-	else {
-		std::cout << "Parser error. Please check your input. This program takes a path and a threshold." << std::endl;
-		std::cout << "Correct format: ' -path [Path] -threshold [0 -" << MAXTHRESHOLD <<"] '" << std::endl;
-		std::cout << "Press any key to end the program and try again." << std::endl;
 		getchar();
+
 	}
 
-	return 0;
+	mainMenu.setState = menuState::MAINMENU;
+
+	
+
+	return EXIT_SUCCESS;
 }

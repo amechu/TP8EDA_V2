@@ -1,6 +1,7 @@
 #include "allegroClass.h"
 #include <iostream>
 using namespace std;
+
 allegro_c::allegro_c()
 {
 	if (al_init())
@@ -17,17 +18,13 @@ allegro_c::allegro_c()
 						{
 							if ((ev_queue = al_create_event_queue()))
 							{
-								if ((timer = al_create_timer(1.0 / FPS)))
+								if ((display = al_create_display(SCREEN_W, SCREEN_H)))
 								{
-									if ((display = al_create_display(SCREEN_W, SCREEN_H)))
-									{
-										al_register_event_source(this->ev_queue, al_get_keyboard_event_source());
-										al_register_event_source(this->ev_queue, al_get_display_event_source(this->display));
-										al_register_event_source(this->ev_queue, al_get_timer_event_source(this->timer));
-										al_set_window_title(display, "CLCSSC CODING HANDLER");
-										ALLEGRO_BITMAP * icon = al_load_bitmap("icon.jpg");
-										al_set_display_icon(display, icon);
-									}
+									al_register_event_source(this->ev_queue, al_get_keyboard_event_source());
+									al_register_event_source(this->ev_queue, al_get_display_event_source(this->display));
+									al_set_window_title(display, "ENCD CODING HANDLER");
+									ALLEGRO_BITMAP * icon = al_load_bitmap("icon.jpg");
+									al_set_display_icon(display, icon);
 								}
 							}
 						}
@@ -57,7 +54,6 @@ allegro_c::~allegro_c()
 	al_destroy_display(display);
 	al_stop_samples();
 	al_destroy_sample(music);
-	al_destroy_timer(timer);
 	al_destroy_event_queue(ev_queue);
 	al_shutdown_image_addon();
 	al_uninstall_audio();
@@ -66,10 +62,14 @@ allegro_c::~allegro_c()
 bool allegro_c::load_music(const char * music_file) //Devuelve 1 si todo salio bien
 {
 	bool result;
-	if (this->music = al_load_sample(music_file))
+	if (this->music = al_load_sample(music_file)) {
 		result = true;
-	else
+	}
+	else {
+		std::cout << "ERROR: Failed to find music file." << std::endl;
 		result = false;
+	}
+
 	return result;
 
 }

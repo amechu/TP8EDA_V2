@@ -5,3 +5,8 @@ void Page::addImage(std::string path_, unsigned width_, unsigned height_) {
 		images[images.size()] = new Image(path_, width_, height_);
 	 }
 }
+
+bool const Page::isSelected()
+{
+	return selected;
+}

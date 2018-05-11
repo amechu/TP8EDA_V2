@@ -1,9 +1,11 @@
 #include "Image.h"
 
-Image::Image(std::string path_, unsigned width_, unsigned height_) : path(path_), width(width_), height(height_)
+Image::Image(std::string path_)
 {
-	setName();
-	loadBitmap();
+	/*hace tu magia ariel*/
+	setName(); //con el path, encuentra el nombre del archivo y lo carga a "name".
+	decodeImage(); //con el path, llena el vector pixels de pixeles y carga el ancho y alto de la imagen.
+	loadBitmap(); //con el path, carga el bitmap de allegro.
 }
 
 Image::~Image()
@@ -13,6 +15,7 @@ Image::~Image()
 
 void Image::setName()
 {
+	/*hace tu magia ariel*/
 }
 
 void Image::loadBitmap()
@@ -21,4 +24,13 @@ void Image::loadBitmap()
 
 void Image::destroyBitmap()
 {
+	
+}
+
+void Image::decodeImage()
+{
+	unsigned err = lodepng::decode(this->pixels, this->width, this->height, this->path);
+
+	if (err)
+		this->error = true;
 }
