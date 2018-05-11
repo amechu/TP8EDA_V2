@@ -1,4 +1,5 @@
 #include "Parser.h"
+#include <iostream>
 
 int Parser::Read(int argc, char * argv[])
 {
@@ -53,6 +54,7 @@ int Parser::Read(int argc, char * argv[])
 }
 
 
+
 Parser::~Parser()
 {
 }
@@ -74,10 +76,20 @@ void Parser::Do(char * key, char * value)
 
 		for (i = 0; i < NKEYS; i++) //Busca Key conocida
 		{
-			equal = strcmp(key, parseData.key[i]);
-			if (equal == 0)
+			if (strcmp(key, parseData.key[i]))
 			{
-				this->myIP = value;
+				std::string auxString = key;
+				if (auxString == "PATH") {
+					this->path = value;
+				}
+				else if (auxString == "THRESHOLD") {
+					if ((atoi(value) > 0) && (atoi(value) < 765))
+						this->threshold = atoi(value);
+					else {
+						std::cout << "Warning: Incorrect threshold. Threshold should be a value ranging from 0 to " << MAXTHRESHOLD << ". Now using default threshold ("<< DEFAULTH <<")" << std::endl;
+						this->threshold = DEFAULTH;
+					}
+				}
 			}
 		}
 	}
