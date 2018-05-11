@@ -8,9 +8,6 @@ int main(int argc, char*argv[]) {
 	Parser parser;
 	Menu mainMenu;
 
-	allegro_c allClass;
-	allClass.load_music(BACKGROUNDMUSIC);
-	allClass.play_music();
 
 	mainMenu.setParserError(parser.Read(argc, argv));					//Se fija si hubo
 	mainMenu.setFilesystemError(fileReader.load(parser.getPath()));		//algun error a lo largo del
@@ -23,6 +20,11 @@ int main(int argc, char*argv[]) {
 		mainMenu.reportError();											//lo reporto al usuario y cierro programa
 	}
 	else {
+
+		allegro_c allClass;
+		allClass.load_music(BACKGROUNDMUSIC);
+		allClass.play_music();
+
 		mainMenu.setState(menuState::MAINMENU);							//Sino, comienzo mainmenu, espero que el usuario diga si quiere comprimir
 		mainMenu.loopMenu();											//o decomprimir. Siempre haciendo un notify() por cada cambio.
 		if (mainMenu.getState() == menuState::ENCODER) {
