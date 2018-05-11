@@ -4,6 +4,7 @@
 #include <boost/lexical_cast.hpp>
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace boost::filesystem;
 
@@ -20,6 +21,7 @@ public:
 
 
 private:
-	
+	vector<string> pngpaths;
+	vector<string> ENCDpaths;
 };
 

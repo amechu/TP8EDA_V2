@@ -37,11 +37,13 @@ bool FileReader::load(string dir)
 						}
 						if (!strcmp(check.c_str(), "png"))	//poner para los ENCD
 						{
-							cout << auxString << endl; //cambiar por lo de los vectores
+							
+							pngpaths.push_back(auxString);	//subo el path al vector
 						}
 						else if (strcmp(check.c_str(), "ENCD"))
 						{
-							//meter lo de los vecotres
+							ENCDpaths.push_back(auxString);
+							
 						}
 					}
 					;
@@ -54,7 +56,6 @@ bool FileReader::load(string dir)
 	}
 	else
 	{
-		cout << p << " No existe\n";
 		error=true;	//pq esto me va a decir despues si es un error o no
 	}
 	return error;
