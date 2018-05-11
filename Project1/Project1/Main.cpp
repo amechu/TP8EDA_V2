@@ -1,13 +1,14 @@
 #include "Menu.h"
 #include "allegroClass.h"
 #include "Parser.h"
+#include "FileReader.h"
 #include <iostream>
 
 int main(int argc, char*argv[]) {
 
 	Parser parser;
 	Menu mainMenu;
-
+	FileReader fileReader;
 
 	mainMenu.setParserError(parser.Read(argc, argv));					//Se fija si hubo
 	mainMenu.setFilesystemError(fileReader.load(parser.getPath()));		//algun error a lo largo del
