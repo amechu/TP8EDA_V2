@@ -11,7 +11,7 @@ int main(int argc, char*argv[]) {
 	}
 	else {
 		std::cout << "Parser error. Please check your input. This program takes a path and a threshold." << std::endl;
-		std::cout << "Correct format: ' -path [Path] -threshold [0 -" << MAXTHRESHOLD <<"]" << std::endl;
+		std::cout << "Correct format: ' -path [Path] -threshold [0 -" << MAXTHRESHOLD <<"] '" << std::endl;
 		std::cout << "Press any key to end the program and try again." << std::endl;
 		getchar();
 	}

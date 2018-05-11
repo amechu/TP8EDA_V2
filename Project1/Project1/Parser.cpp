@@ -83,7 +83,7 @@ void Parser::Do(char * key, char * value)
 					this->path = value;
 				}
 				else if (auxString == "THRESHOLD") {
-					if ((atoi(value) > 0) && (atoi(value) < 765))
+					if ((atoi(value) >= 0) && (atoi(value) <= 765))
 						this->threshold = atoi(value);
 					else {
 						std::cout << "Warning: Incorrect threshold. Threshold should be a value ranging from 0 to " << MAXTHRESHOLD << ". Now using default threshold ("<< DEFAULTH <<")" << std::endl;
