@@ -126,12 +126,14 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Page.cpp" />
+    <ClCompile Include="Parser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Drawer.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Page.h" />
+    <ClInclude Include="Parser.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
