@@ -13,14 +13,32 @@ public:
 	Menu();
 	~Menu();
 	void const notify();
-	menuState const getState();
-	void setParserError(bool error);
+
 	bool const getParserError();
-	void setFilesystemError(bool error);
 	bool const getFilesystemError();
+	bool loadImages();
+	bool loadENCD();
+
+	menuState const getState();
+	menuError const getError();
+	
+	void setParserError(bool error);
+	void setFilesystemError(bool error);
+	void setImageError(bool error);
+	void setENCDError(bool error);
 	void setState(menuState state_);
 	void setError(menuError error_);
+	
 	void checkError();
+	void reportError();
+	void loopMenu();
+	void loopEncoder();
+	bool encode();
+	void loopDecoder();
+	bool decode();
+	
+
+
 
 private:
 	std::vector<Page> pages;
