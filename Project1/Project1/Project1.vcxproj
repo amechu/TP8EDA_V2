@@ -121,6 +121,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="allegroClass.cpp" />
     <ClCompile Include="Drawer.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -129,6 +130,7 @@
     <ClCompile Include="Parser.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="allegroClass.h" />
     <ClInclude Include="Drawer.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="Menu.h" />

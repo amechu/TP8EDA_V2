@@ -8,6 +8,14 @@ int main(int argc, char*argv[]) {
 
 	if (!parser.Read(argc, argv)){
 
+
+
+
+
+
+
+
+
 	}
 	else {
 		std::cout << "Parser error. Please check your input. This program takes a path and a threshold." << std::endl;
