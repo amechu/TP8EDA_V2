@@ -31,25 +31,26 @@ int main(int argc, char*argv[]) {
 		if (mainMenu.getState() == menuState::ENCODER) {
 			mainMenu.loopEncoder();										//Si quizo comprimir, entro en menu de comprimir
 			if (mainMenu.encode()) {									//Comprimo
-				mainMenu.setState == menuState::SUCCESS;				//Si fue exitoso
+				mainMenu.setState(menuState::SUCCESS);				//Si fue exitoso
 				mainMenu.notify();										//Notifico exito
 			}
 			else {
-				mainMenu.setState == menuState::ERROR;					//Si hubo error
+				mainMenu.setState(menuState::ERROR);					//Si hubo error
 				mainMenu.notify();										//Notifico error
 			}
 		}
 		else if (mainMenu.getState() == menuState::DECODER) {			//Si quizo decomprimir, entro en menu de decomprimir
 			mainMenu.loopDecoder();										
 			if (mainMenu.decode()) {									//Decomprimo
-				mainMenu.setState == menuState::SUCCESS;				//Si fue exitoso
+				mainMenu.setState(menuState::SUCCESS);				//Si fue exitoso
 				mainMenu.notify();										//Notifico exito
 			}
 			else {
-				mainMenu.setState == menuState::ERROR;					//Si hubo error
+				mainMenu.setState(menuState::ERROR);					//Si hubo error
 				mainMenu.notify();										//Notifico error
 			}
 		}
+		getchar();
 	}
 		
 	return EXIT_SUCCESS;												//Salgo del programa

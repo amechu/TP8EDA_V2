@@ -23,7 +23,7 @@ menuState const Menu::getState()
 
 menuError const Menu::getError()
 {
-	return nullptr;
+	return this->error;
 }
 
 void Menu::setParserError(bool error)
@@ -74,10 +74,6 @@ void Menu::setError(menuError error_)
 	error = error;
 }
 
-void Menu::checkError()
-{
-}
-
 void Menu::reportError()
 {
 }
@@ -111,4 +107,5 @@ void Menu::checkError()
 	}
 	if (getParserError()) {
 		setError(menuError::BAD_PARSER);
+	}
 }
