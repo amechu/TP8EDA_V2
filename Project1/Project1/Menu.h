@@ -14,6 +14,11 @@ public:
 	~Menu();
 	void const notify();
 	menuState const getState();
+	void setParserError(bool error);
+	bool const getParserError();
+	void setFilesystemError(bool error);
+	bool const getFilesystemError();
+	void setState(menuState state_);
 
 private:
 	std::vector<Page> pages;
@@ -21,5 +26,7 @@ private:
 	Drawer drawer;
 	menuState state = menuState::MAINMENU;
 	menuError error = menuError::NO_ERROR;
+	bool parserError;
+	bool filesystemError;
 };
 
