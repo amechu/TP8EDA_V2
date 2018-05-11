@@ -45,3 +45,17 @@ void Menu::setState(menuState state_)
 {
 	state = state_;
 }
+
+void Menu::setError(menuError error_)
+{
+	error = error;
+}
+
+void Menu::checkError()
+{
+	if (getFilesystemError()) {
+		setError(menuError::BAD_FILEREADER);
+	}
+	if (getParserError()) {
+		setError(menuError::BAD_PARSER);
+}
