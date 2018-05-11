@@ -21,6 +21,11 @@ menuState const Menu::getState()
 	return this->state;
 }
 
+menuError const Menu::getError()
+{
+	return nullptr;
+}
+
 void Menu::setParserError(bool error)
 {
 	parserError = error;
@@ -36,9 +41,27 @@ void Menu::setFilesystemError(bool error)
 	filesystemError = error;
 }
 
+void Menu::setImageError(bool error)
+{
+}
+
+void Menu::setENCDError(bool error)
+{
+}
+
 bool const Menu::getFilesystemError()
 {
 	return filesystemError;
+}
+
+bool Menu::loadImages()
+{
+	return false;
+}
+
+bool Menu::loadENCD()
+{
+	return false;
 }
 
 void Menu::setState(menuState state_)
@@ -49,6 +72,36 @@ void Menu::setState(menuState state_)
 void Menu::setError(menuError error_)
 {
 	error = error;
+}
+
+void Menu::checkError()
+{
+}
+
+void Menu::reportError()
+{
+}
+
+void Menu::loopMenu()
+{
+}
+
+void Menu::loopEncoder()
+{
+}
+
+bool Menu::encode()
+{
+	return false;
+}
+
+void Menu::loopDecoder()
+{
+}
+
+bool Menu::decode()
+{
+	return false;
 }
 
 void Menu::checkError()
