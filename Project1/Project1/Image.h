@@ -1,6 +1,7 @@
 #pragma once
 #include "allegro5\allegro.h"
 #include "boost\filesystem.hpp"
+#include <boost/lexical_cast.hpp>
 #include "lodepng.h"
 #include <string>
 #include <vector>
@@ -17,7 +18,7 @@ private:
 	
 	std::vector<unsigned char> pixels; //Vector de pixeles de la imagen
 	
-	std::string path; //Filepath al archivo
+	std::string Path; //Filepath al archivo, con mayusculas pq sino hace conflicto con el clase path
 	
 	std::string name; //Nombre de la imagen
 	

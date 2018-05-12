@@ -1,5 +1,7 @@
 #include "Image.h"
 
+using namespace boost::filesystem;
+
 Image::Image(std::string path_)
 {
 	/*hace tu magia ariel*/
@@ -14,8 +16,12 @@ Image::~Image()
 }
 
 void Image::setName()
-{
-	/*hace tu magia ariel*/
+{	
+	path p(Path.c_str());
+	if (exists(p))
+	{
+		name = (p.filename().string()); //esto deberia devolver el name del archivo como un string
+	}
 }
 
 void Image::loadBitmap()
@@ -29,7 +35,7 @@ void Image::destroyBitmap()
 
 void Image::decodeImage()
 {
-	unsigned err = lodepng::decode(this->pixels, this->width, this->height, this->path);
+	unsigned err = lodepng::decode(this->pixels, this->width, this->height, this->Path);
 
 	if (err)
 		this->error = true;
