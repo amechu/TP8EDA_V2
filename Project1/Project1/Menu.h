@@ -56,5 +56,7 @@ private:
 
 	bool parserError;
 	bool filesystemError;
+
+	bool shouldRedraw; //Variable utilizada para saber si debo, o no, llamar a update del drawer.
 };
 

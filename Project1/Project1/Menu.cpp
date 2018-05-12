@@ -108,6 +108,10 @@ void Menu::loopMenu(ALLEGRO_EVENT_QUEUE * evq)
 {
 	ALLEGRO_EVENT alEv;
 
+	if (this->shouldRedraw) {
+		this->drawer.update(this->getState());
+		this->shouldRedraw = false;
+	}
 
 	this->drawer.update(this->getState());
 
@@ -117,7 +121,7 @@ void Menu::loopMenu(ALLEGRO_EVENT_QUEUE * evq)
 
 			switch (alEv.type) {
 
-			case ALLEGRO_KEY_DOWN:
+			case ALLEGRO_EVENT_KEY_DOWN:
 
 				if (alEv.keyboard.keycode == ALLEGRO_KEY_E)
 					this->setState(menuState::ENCODER);
@@ -139,6 +143,10 @@ void Menu::loopMenu(ALLEGRO_EVENT_QUEUE * evq)
 
 void Menu::loopEncoder(ALLEGRO_EVENT_QUEUE * evq) {
 
+	if (this->shouldRedraw) {
+		this->drawer.update(this->getState());
+		this->shouldRedraw = false;
+	}
 
 	ALLEGRO_EVENT alEv;
 
@@ -155,15 +163,15 @@ void Menu::loopEncoder(ALLEGRO_EVENT_QUEUE * evq) {
 			case ALLEGRO_KEY_DOWN:
 				switch (alEv.keyboard.keycode) {
 
-				case ALLEGRO_KEY_1:	if ((imPointer = pages[currentPage].getImage(1)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); }	break;
-				case ALLEGRO_KEY_2:	if ((imPointer = pages[currentPage].getImage(2)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); }	break;
-				case ALLEGRO_KEY_3:	if ((imPointer = pages[currentPage].getImage(3)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); }	break;
-				case ALLEGRO_KEY_4:	if ((imPointer = pages[currentPage].getImage(4)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); }	break;
-				case ALLEGRO_KEY_5:	if ((imPointer = pages[currentPage].getImage(5)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); }	break;
-				case ALLEGRO_KEY_6:	if ((imPointer = pages[currentPage].getImage(6)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); }	break;
-				case ALLEGRO_KEY_7:	if ((imPointer = pages[currentPage].getImage(7)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); }	break;
-				case ALLEGRO_KEY_8:	if ((imPointer = pages[currentPage].getImage(8)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); }	break;
-				case ALLEGRO_KEY_9:	if ((imPointer = pages[currentPage].getImage(9)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); }	break;
+				case ALLEGRO_KEY_1:	if ((imPointer = pages[currentPage].getImage(1)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_2:	if ((imPointer = pages[currentPage].getImage(2)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_3:	if ((imPointer = pages[currentPage].getImage(3)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_4:	if ((imPointer = pages[currentPage].getImage(4)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true;}	break;
+				case ALLEGRO_KEY_5:	if ((imPointer = pages[currentPage].getImage(5)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true;}	break;
+				case ALLEGRO_KEY_6:	if ((imPointer = pages[currentPage].getImage(6)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true;}	break;
+				case ALLEGRO_KEY_7:	if ((imPointer = pages[currentPage].getImage(7)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true;}	break;
+				case ALLEGRO_KEY_8:	if ((imPointer = pages[currentPage].getImage(8)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true;}	break;
+				case ALLEGRO_KEY_9:	if ((imPointer = pages[currentPage].getImage(9)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true;}	break;
 
 
 
@@ -177,8 +185,10 @@ void Menu::loopEncoder(ALLEGRO_EVENT_QUEUE * evq) {
 							}
 						}
 
-					if (canSwitchModes)
+					if (canSwitchModes) {
 						this->setState(menuState::ENCODING);
+						this->shouldRedraw = true;
+					}
 					else
 						this->alClass->play_music(WRONG);
 
@@ -194,6 +204,8 @@ void Menu::loopEncoder(ALLEGRO_EVENT_QUEUE * evq) {
 							}
 						}
 
+					this->shouldRedraw = true;
+					break;
 
 				case ALLEGRO_KEY_N: //Si toco la N debo poner todo en "deseleccionado".
 
@@ -203,11 +215,13 @@ void Menu::loopEncoder(ALLEGRO_EVENT_QUEUE * evq) {
 								(*imPointer).toggleSelection(toggleVal::TOGGLEFALSE);
 							}
 						}
+					this->shouldRedraw = true;
 					break;
 
 				case ALLEGRO_KEY_LEFT:
 				case ALLEGRO_KEY_RIGHT:
 					this->switchPage(alEv); //Sea izquierda o derecha, lo trabajo a través de este método.
+					this->shouldRedraw = true;
 					break;
 
 				default: alClass->play_music(1); //Efecto de sonido cuando toco una tecla incorrecta
@@ -231,29 +245,37 @@ void Menu::loopDecoder(ALLEGRO_EVENT_QUEUE * evq)
 {
 	ALLEGRO_EVENT alEv;
 
+	if (this->shouldRedraw) {
+		this->drawer.update(this->getState());
+		this->shouldRedraw = false;
+	}
 
 	while (this->getState() == menuState::DECODER) {
 
 
-		Image * imPointer = pages[currentPage].getImage(1); //Elijo la primera, pues siempre debería haber, a menos que no haya imagenes a encodear y entonces es NULL.
+		Image * imPointer = NULL;
+
+		if (this->pages.size() > 0)
+			imPointer = pages[currentPage].getImage(1);
+
 		bool canSwitchModes = false;
 
 		if (al_get_next_event(evq, &alEv)) {
 
 			switch (alEv.type) {
 
-			case ALLEGRO_KEY_DOWN:
+			case ALLEGRO_EVENT_KEY_DOWN:
 				switch (alEv.keyboard.keycode) {
 
-				case ALLEGRO_KEY_1:	if ((imPointer = pages[currentPage].getImage(1)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); }	break;
-				case ALLEGRO_KEY_2:	if ((imPointer = pages[currentPage].getImage(2)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); }	break;
-				case ALLEGRO_KEY_3:	if ((imPointer = pages[currentPage].getImage(3)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); }	break;
-				case ALLEGRO_KEY_4:	if ((imPointer = pages[currentPage].getImage(4)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); }	break;
-				case ALLEGRO_KEY_5:	if ((imPointer = pages[currentPage].getImage(5)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); }	break;
-				case ALLEGRO_KEY_6:	if ((imPointer = pages[currentPage].getImage(6)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); }	break;
-				case ALLEGRO_KEY_7:	if ((imPointer = pages[currentPage].getImage(7)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); }	break;
-				case ALLEGRO_KEY_8:	if ((imPointer = pages[currentPage].getImage(8)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); }	break;
-				case ALLEGRO_KEY_9:	if ((imPointer = pages[currentPage].getImage(9)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); }	break;
+				case ALLEGRO_KEY_1:	if ((imPointer = pages[currentPage].getImage(1)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_2:	if ((imPointer = pages[currentPage].getImage(2)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_3:	if ((imPointer = pages[currentPage].getImage(3)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_4:	if ((imPointer = pages[currentPage].getImage(4)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_5:	if ((imPointer = pages[currentPage].getImage(5)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_6:	if ((imPointer = pages[currentPage].getImage(6)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_7:	if ((imPointer = pages[currentPage].getImage(7)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_8:	if ((imPointer = pages[currentPage].getImage(8)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_9:	if ((imPointer = pages[currentPage].getImage(9)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
 
 
 
@@ -267,12 +289,14 @@ void Menu::loopDecoder(ALLEGRO_EVENT_QUEUE * evq)
 							}
 						}
 
-					if (canSwitchModes)
+					if (canSwitchModes) {
 						this->setState(menuState::DECODING);
+						this->shouldRedraw = true;
+					}
 					else
 						this->alClass->play_music(WRONG);
-					
-					break; 
+
+					break;
 
 
 				case ALLEGRO_KEY_A: //Si toco la A debo poner todo en "seleccionado".
@@ -284,6 +308,8 @@ void Menu::loopDecoder(ALLEGRO_EVENT_QUEUE * evq)
 							}
 						}
 
+					this->shouldRedraw = true;
+					break;
 
 				case ALLEGRO_KEY_N: //Si toco la N debo poner todo en "deseleccionado".
 
@@ -293,14 +319,17 @@ void Menu::loopDecoder(ALLEGRO_EVENT_QUEUE * evq)
 								(*imPointer).toggleSelection(toggleVal::TOGGLEFALSE);
 							}
 						}
+
+					this->shouldRedraw = true;
 					break;
 
 				case ALLEGRO_KEY_LEFT:
 				case ALLEGRO_KEY_RIGHT:
 					this->switchPage(alEv); //Sea izquierda o derecha, lo trabajo a través de este método.
+					this->shouldRedraw = true;
 					break;
 
-				default: alClass->play_music(1); //Efecto de sonido cuando toco una tecla incorrecta
+				default: alClass->play_music(WRONG); //Efecto de sonido cuando toco una tecla incorrecta
 				}
 				break;
 

@@ -16,7 +16,6 @@ void Drawer::update(menuState state)
 }
 
 void Drawer::drawMenu() {
-	al_draw_rectangle(0, 0, SCREEN_W, SCREEN_H, al_map_rgb(0, 0, 255),0);
 }
 
 void Drawer::drawEncoder() {

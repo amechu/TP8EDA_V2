@@ -11,8 +11,8 @@ int main(int argc, char*argv[]) {
 	FileReader fileReader;
 
 	mainMenu.setParserError(parser.Read(argc, argv));					//Se fija si hubo
-	mainMenu.setFilesystemError(fileReader.load(parser.getPath()));		//algun error a lo largo del
-	mainMenu.setImageError(mainMenu.loadImages());						//seteo inicial del programa
+	//mainMenu.setFilesystemError(fileReader.load(parser.getPath()));		//algun error a lo largo del
+	//mainMenu.setImageError(mainMenu.loadImages());						//seteo inicial del programa
 	mainMenu.setENCDError(mainMenu.loadENCD());							//y si lo hay, lo carga
 
 	mainMenu.checkError();												//Se fija que errores hubo y cambia el estado y variable de error acorde
@@ -27,7 +27,6 @@ int main(int argc, char*argv[]) {
 		allClass.load_music(BACKGROUNDMUSIC, 0);
 		allClass.load_music(WRONGINPUTSFX, 1);
 		allClass.play_music(0);
-		allClass.play_music(WRONG);
 
 		mainMenu.loadAllegroClass(&allClass);
 

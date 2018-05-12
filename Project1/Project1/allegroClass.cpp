@@ -9,7 +9,7 @@ allegro_c::allegro_c() {
 		{
 			if (al_init_acodec_addon())
 			{
-				if ((al_reserve_samples(1)))
+				if ((al_reserve_samples(2)))
 				{
 					if (al_init_image_addon())
 					{
@@ -85,8 +85,10 @@ ALLEGRO_EVENT_QUEUE * allegro_c::getEventQueue()
 
 void allegro_c::play_music(unsigned char i)
 {
-	if(i < SONGSQTY)
-		al_play_sample(this->music[i], 1.0, 0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
+	if(i == 0)
+		al_play_sample(this->music[0], 1.0, 0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
+	else if(i == 1)
+		al_play_sample(this->music[1], 1.0, 0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 }
 
 void allegro_c::start_timer() {

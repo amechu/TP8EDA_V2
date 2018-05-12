@@ -13,14 +13,14 @@ public:
 	~Page() { for (Image* img : images) { delete img; } };
 
 	void addImage (std::string path_, unsigned width, unsigned height);
-	Image * getImage(int i) { return images[i]; }
+	Image * getImage(int i);
 
 	bool const isSelected();
 
 	unsigned char getPageNumber() { return pageNumber; }
 
 private:
-	std::array<Image*, 9> images;
+	std::array<Image*, 9> images = { NULL };
 	unsigned char pageNumber;
 	bool selected;
 };

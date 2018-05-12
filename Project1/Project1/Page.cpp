@@ -12,3 +12,8 @@ bool const Page::isSelected()
 {
 	return selected;
 }
+
+Image * Page::getImage(int i){ 
+
+		return images[i - 1]; //i-1 para ser coherente con el input que sera de 1 a 9.
+}
