@@ -129,6 +129,8 @@ void Menu::loopMenu(ALLEGRO_EVENT_QUEUE * evq)
 					this->setState(menuState::DECODER);
 				else if (alEv.keyboard.keycode == ALLEGRO_KEY_Q)
 					this->setState(menuState::QUIT);
+				else
+					this->alClass->play_music(WRONG);
 
 				break;
 
