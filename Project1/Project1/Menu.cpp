@@ -127,7 +127,7 @@ void Menu::loopMenu(ALLEGRO_EVENT_QUEUE * evq)
 					this->setState(menuState::ENCODER);
 				else if (alEv.keyboard.keycode == ALLEGRO_KEY_D)
 					this->setState(menuState::DECODER);
-				else if (alEv.keyboard.keycode == ALLEGRO_KEY_Q)
+				else if (alEv.keyboard.keycode == ALLEGRO_KEY_Q || ALLEGRO_KEY_ESCAPE)
 					this->setState(menuState::QUIT);
 				else
 					this->alClass->play_music(WRONG);
@@ -155,14 +155,18 @@ void Menu::loopEncoder(ALLEGRO_EVENT_QUEUE * evq) {
 	while (this->getState() == menuState::ENCODER) {
 
 
-		Image * imPointer = pages[currentPage].getImage(1); //Elijo la primera, pues siempre debería haber, a menos que no haya imagenes a encodear y entonces es NULL.
+		Image * imPointer = NULL;
+
+		if (this->pages.size() > 0)
+			imPointer = pages[currentPage].getImage(1);
+
 		bool canSwitchModes = false;
 
 		if (al_get_next_event(evq, &alEv)) {
 
 			switch (alEv.type) {
 
-			case ALLEGRO_KEY_DOWN:
+			case ALLEGRO_EVENT_KEY_DOWN:
 				switch (alEv.keyboard.keycode) {
 
 				case ALLEGRO_KEY_1:	if ((imPointer = pages[currentPage].getImage(1)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
@@ -181,18 +185,18 @@ void Menu::loopEncoder(ALLEGRO_EVENT_QUEUE * evq) {
 
 				case ALLEGRO_KEY_ENTER: //Si toco ENTER, procedo a encodear lo que esté seleccionado. Si no hay nada seleccionado, informo a través de un efecto de sonido.
 					for (Page page : this->pages)
-						for (int i = 0; (imPointer != NULL) && (i < 9) && canSwitchModes == true; i++) {
-							if ((imPointer = page.getImage(i)) != NULL) {
+						for (int i = 0; (imPointer != NULL) && (i < 9) && canSwitchModes == false; i++) { //Si aun no llegué a un puntero a NULL (Que implica que los siguientes también lo son) y aun no encontré almenos una imagen seleccionada
+							if ((imPointer = page.getImage(i)) != NULL) { //...Sigo loopeando hasta encontrar una seleccionada o llegar al final de la lista.
 								canSwitchModes = (*imPointer).getSelectValue();
 							}
 						}
 
-					if (canSwitchModes) {
+					if (canSwitchModes) { //Si había almenos una imagen seleccionada, procedo a cambiar el estado y a redibujar el menu.
 						this->setState(menuState::ENCODING);
 						this->shouldRedraw = true;
 					}
 					else
-						this->alClass->play_music(WRONG);
+						this->alClass->play_music(WRONG); // WRONG.
 
 					break;
 
@@ -226,7 +230,7 @@ void Menu::loopEncoder(ALLEGRO_EVENT_QUEUE * evq) {
 					this->shouldRedraw = true;
 					break;
 
-				default: alClass->play_music(1); //Efecto de sonido cuando toco una tecla incorrecta
+				default: alClass->play_music(WRONG); //Efecto de sonido cuando toco una tecla incorrecta
 				}
 				break;
 
@@ -257,10 +261,10 @@ void Menu::loopDecoder(ALLEGRO_EVENT_QUEUE * evq)
 
 		Image * imPointer = NULL;
 
-		if (this->pages.size() > 0)
+		if (this->pages.size() > 0) //Si hay almenos una página, hago que 
 			imPointer = pages[currentPage].getImage(1);
 
-		bool canSwitchModes = false;
+		bool canSwitchModes = false; //Booleano que me indica si puedo 
 
 		if (al_get_next_event(evq, &alEv)) {
 
@@ -269,8 +273,8 @@ void Menu::loopDecoder(ALLEGRO_EVENT_QUEUE * evq)
 			case ALLEGRO_EVENT_KEY_DOWN:
 				switch (alEv.keyboard.keycode) {
 
-				case ALLEGRO_KEY_1:	if ((imPointer = pages[currentPage].getImage(1)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
-				case ALLEGRO_KEY_2:	if ((imPointer = pages[currentPage].getImage(2)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_1:	if ((imPointer = pages[currentPage].getImage(1)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break; //Si toco un número, debo cambiar el valor de selección
+				case ALLEGRO_KEY_2:	if ((imPointer = pages[currentPage].getImage(2)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break; //de la imagen en pantalla a la cual corresponde ese número.
 				case ALLEGRO_KEY_3:	if ((imPointer = pages[currentPage].getImage(3)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
 				case ALLEGRO_KEY_4:	if ((imPointer = pages[currentPage].getImage(4)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
 				case ALLEGRO_KEY_5:	if ((imPointer = pages[currentPage].getImage(5)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
@@ -285,18 +289,18 @@ void Menu::loopDecoder(ALLEGRO_EVENT_QUEUE * evq)
 
 				case ALLEGRO_KEY_ENTER: //Si toco ENTER, procedo a decodear lo que esté seleccionado. Si no hay nada seleccionado, informo a través de un efecto de sonido.
 					for (Page page : this->pages)
-						for (int i = 0; (imPointer != NULL) && (i < 9) && canSwitchModes == true; i++) {
-							if ((imPointer = page.getImage(i)) != NULL) {
+						for (int i = 0; (imPointer != NULL) && (i < 9) && canSwitchModes == false; i++) { //Si no llegué a un NULL pointer (o sea que aún podría haber imagenes seleccionadas) y aún no encontré una seleccionada....
+							if ((imPointer = page.getImage(i)) != NULL) { //...Sigo buscando hasta encontrar una seleccionada.
 								canSwitchModes = (*imPointer).getSelectValue();
 							}
 						}
 
 					if (canSwitchModes) {
-						this->setState(menuState::DECODING);
+						this->setState(menuState::DECODING); //Si encontré almenos una seleccionada, procedo al codeo.
 						this->shouldRedraw = true;
 					}
 					else
-						this->alClass->play_music(WRONG);
+						this->alClass->play_music(WRONG); // De lo contrario, como diría Donald Trump: WRONG.
 
 					break;
 
