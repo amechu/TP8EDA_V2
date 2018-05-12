@@ -1,10 +1,19 @@
 #pragma once
 
-class Drawer
-{
-public:
-	void update(void* subject); /*Dependiendo del estado de Menu,
-dibuja acordemente. En MAINMENU dibuja la pantalla preguntando si se desea comprimir, 
-descomprimir, o salir. En ENCODE se deben mostrar todas las imagenes que esten seleccionadas*/
-};
+#include "allegroClass.h"
+enum class menuState { MAINMENU, ENCODER, DECODER, ENCODING, DECODING, SUCCESS, ERROR, QUIT };
 
+class Drawer {
+public:
+
+	void update(menuState state);
+
+private:
+
+	void drawMenu();
+	void drawEncoder();
+	void drawDecoder();
+	void drawError();
+	void drawSuccess();
+
+};

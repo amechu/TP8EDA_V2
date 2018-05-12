@@ -19,17 +19,24 @@ int main(int argc, char*argv[]) {
 
 	if (mainMenu.getError() != menuError::NO_ERROR) {					//Si hubo algun error
 		mainMenu.reportError();											//lo reporto al usuario y cierro programa
+		getchar();
 	}
 	else {
 
 		allegro_c allClass;
-		allClass.load_music(BACKGROUNDMUSIC);
-		allClass.play_music();
+		allClass.load_music(BACKGROUNDMUSIC, 0);
+		allClass.load_music(WRONGINPUTSFX, 1);
+		allClass.play_music(0);
+		allClass.play_music(WRONG);
+
+		mainMenu.loadAllegroClass(&allClass);
 
 		mainMenu.setState(menuState::MAINMENU);							//Sino, comienzo mainmenu, espero que el usuario diga si quiere comprimir
-		mainMenu.loopMenu();											//o decomprimir. Siempre haciendo un notify() por cada cambio.
+		mainMenu.loopMenu(allClass.getEventQueue());											//o decomprimir. Siempre haciendo un notify() por cada cambio.
+
+
 		if (mainMenu.getState() == menuState::ENCODER) {
-			mainMenu.loopEncoder();										//Si quizo comprimir, entro en menu de comprimir
+			mainMenu.loopEncoder(allClass.getEventQueue());										//Si quizo comprimir, entro en menu de comprimir
 			if (mainMenu.encode()) {									//Comprimo
 				mainMenu.setState(menuState::SUCCESS);				//Si fue exitoso
 				mainMenu.notify();										//Notifico exito
@@ -40,7 +47,7 @@ int main(int argc, char*argv[]) {
 			}
 		}
 		else if (mainMenu.getState() == menuState::DECODER) {			//Si quizo decomprimir, entro en menu de decomprimir
-			mainMenu.loopDecoder();										
+			mainMenu.loopDecoder(allClass.getEventQueue());
 			if (mainMenu.decode()) {									//Decomprimo
 				mainMenu.setState(menuState::SUCCESS);				//Si fue exitoso
 				mainMenu.notify();										//Notifico exito
@@ -50,8 +57,6 @@ int main(int argc, char*argv[]) {
 				mainMenu.notify();										//Notifico error
 			}
 		}
-		getchar();
 	}
-		
 	return EXIT_SUCCESS;												//Salgo del programa
 }

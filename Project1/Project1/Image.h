@@ -6,11 +6,16 @@
 #include <string>
 #include <vector>
 
+enum class toggleVal { TOGGLETRUE, TOGGLE, TOGGLEFALSE };
+
 class Image
 {
 public:
 	Image(std::string path_);
 	~Image();
+
+	void toggleSelection(toggleVal select);
+	bool getSelectValue() { return selected; }
 
 private:
 	

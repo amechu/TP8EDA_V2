@@ -1,9 +1,8 @@
 #include "allegroClass.h"
 #include <iostream>
-using namespace std;
 
-allegro_c::allegro_c()
-{
+
+allegro_c::allegro_c() {
 	if (al_init())
 	{
 		if (al_install_audio())
@@ -18,13 +17,16 @@ allegro_c::allegro_c()
 						{
 							if ((ev_queue = al_create_event_queue()))
 							{
-								if ((display = al_create_display(SCREEN_W, SCREEN_H)))
+								if (al_init_font_addon())
 								{
-									al_register_event_source(this->ev_queue, al_get_keyboard_event_source());
-									al_register_event_source(this->ev_queue, al_get_display_event_source(this->display));
-									al_set_window_title(display, "ENCD CODING HANDLER");
-									ALLEGRO_BITMAP * icon = al_load_bitmap("icon.jpg");
-									al_set_display_icon(display, icon);
+									if ((display = al_create_display(SCREEN_W, SCREEN_H)))
+									{
+										al_register_event_source(this->ev_queue, al_get_keyboard_event_source());
+										al_register_event_source(this->ev_queue, al_get_display_event_source(this->display));
+										al_set_window_title(display, "ENCD CODING HANDLER");
+										ALLEGRO_BITMAP * icon = al_load_bitmap("icon.jpg");
+										al_set_display_icon(display, icon);
+									}
 								}
 							}
 						}
@@ -45,24 +47,21 @@ allegro_c::allegro_c()
 		std::cout << "ERROR: Failed to initialize allegro system\n" << std::endl;
 }
 
-void allegro_c::start_timer() {
-	al_start_timer(this->timer); //Usado para iniciar el timer despues del handshake bloqueante
-}
-
 allegro_c::~allegro_c()
 {
 	al_destroy_display(display);
 	al_stop_samples();
-	al_destroy_sample(music);
+	al_destroy_sample(music[0]);
+	al_destroy_sample(music[1]);
 	al_destroy_event_queue(ev_queue);
 	al_shutdown_image_addon();
 	al_uninstall_audio();
 }
 
-bool allegro_c::load_music(const char * music_file) //Devuelve 1 si todo salio bien
+bool allegro_c::load_music(const char * music_file, unsigned char i) //Devuelve 1 si todo salio bien
 {
 	bool result;
-	if (this->music = al_load_sample(music_file)) {
+	if ((i < SONGSQTY) && (this->music[i] = al_load_sample(music_file))) {
 		result = true;
 	}
 	else {
@@ -84,7 +83,12 @@ ALLEGRO_EVENT_QUEUE * allegro_c::getEventQueue()
 	return ev_queue;
 }
 
-void allegro_c::play_music()
+void allegro_c::play_music(unsigned char i)
 {
-	al_play_sample(this->music, 1.0, 0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
+	if(i < SONGSQTY)
+		al_play_sample(this->music[i], 1.0, 0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
+}
+
+void allegro_c::start_timer() {
+	al_start_timer(this->timer);
 }

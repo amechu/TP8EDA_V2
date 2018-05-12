@@ -40,3 +40,25 @@ void Image::decodeImage()
 	if (err)
 		this->error = true;
 }
+
+void Image::toggleSelection(toggleVal select){ 
+	switch (select) {
+	case toggleVal::TOGGLETRUE:
+		this->selected = true;
+		break;
+
+	case toggleVal::TOGGLEFALSE:
+		this->selected = false;
+		break;
+
+	case toggleVal::TOGGLE:
+		if (this->selected == true)
+			this->selected = false;
+		else
+			this->selected = true;
+		break;
+
+	}
+
+	
+}
