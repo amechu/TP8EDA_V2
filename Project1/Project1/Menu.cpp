@@ -157,7 +157,7 @@ void Menu::loopEncoder(ALLEGRO_EVENT_QUEUE * evq) {
 
 		Image * imPointer = NULL;
 
-		if (this->pages.size() > 0)
+		if (this->pages.size() > 0) //Si hay almenos una página, hago que imPointer apunte a esa página. Si no la hay, permanece en NULL. IMPORTANTE PARA LOS FOR.
 			imPointer = pages[currentPage].getImage(1);
 
 		bool canSwitchModes = false;
@@ -261,7 +261,7 @@ void Menu::loopDecoder(ALLEGRO_EVENT_QUEUE * evq)
 
 		Image * imPointer = NULL;
 
-		if (this->pages.size() > 0) //Si hay almenos una página, hago que 
+		if (this->pages.size() > 0) //Si hay almenos una página, hago que imPointer apunte a esa página. Si no la hay, permanece en NULL. IMPORTANTE PARA LOS FOR.
 			imPointer = pages[currentPage].getImage(1);
 
 		bool canSwitchModes = false; //Booleano que me indica si puedo 
