@@ -47,7 +47,7 @@ int main(int argc, char*argv[]) {
 		}
 		else if (mainMenu.getState() == menuState::DECODER) {			//Si quizo decomprimir, entro en menu de decomprimir
 			mainMenu.loopDecoder(allClass.getEventQueue());
-			if (mainMenu.decode()) {									//Decomprimo
+			if (mainMenu.decode()) {									//Descomprimo
 				mainMenu.setState(menuState::SUCCESS);				//Si fue exitoso
 				mainMenu.notify();										//Notifico exito
 			}
