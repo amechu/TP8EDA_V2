@@ -16,10 +16,11 @@ public:
 
 	void toggleSelection(toggleVal select);
 	bool getSelectValue() { return selected; }
+	ALLEGRO_BITMAP * bitmap; //Bitmap de allegro
+	unsigned getWidth();
+	unsigned getHeight();
 
 private:
-	
-	ALLEGRO_BITMAP * bitmap; //Bitmap de allegro
 	
 	std::vector<unsigned char> pixels; //Vector de pixeles de la imagen
 	

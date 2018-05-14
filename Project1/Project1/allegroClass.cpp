@@ -3,6 +3,10 @@
 
 
 allegro_c::allegro_c() {
+
+	bool check1 = false;
+	bool check2 = false;
+
 	if (al_init())
 	{
 		if (al_install_audio())
@@ -21,6 +25,7 @@ allegro_c::allegro_c() {
 								{
 									if ((display = al_create_display(SCREEN_W, SCREEN_H)))
 									{
+										check1 = true;
 										al_register_event_source(this->ev_queue, al_get_keyboard_event_source());
 										al_register_event_source(this->ev_queue, al_get_display_event_source(this->display));
 										al_set_window_title(display, "ENCD CODING HANDLER");
@@ -32,19 +37,41 @@ allegro_c::allegro_c() {
 						}
 					}
 					else
-						std::cout << "ERROR: Failed to load Image addon\n" << std::endl;
+						std::cout << "ERROR: Failed to load Image addon" << std::endl;
 				}
 				else
-					std::cout << "ERROR: Failed to reserve sample\n" << std::endl;
+					std::cout << "ERROR: Failed to reserve sample" << std::endl;
 			}
 			else
-				std::cout << "ERROR: Failed to install acodec addon\n" << std::endl;
+				std::cout << "ERROR: Failed to install acodec addon" << std::endl;
 		}
 		else
-			std::cout << "ERROR: Failed to install audio\n" << std::endl;
+			std::cout << "ERROR: Failed to install audio" << std::endl;
 	}
 	else
-		std::cout << "ERROR: Failed to initialize allegro system\n" << std::endl;
+		std::cout << "ERROR: Failed to initialize allegro system" << std::endl;
+
+	if (check1) {
+		if (al_init_ttf_addon()) {
+			if (smallfont = al_load_font("montserrat.ttf", fontSizeSmall, NULL)) {
+				if (bigfont = al_load_font("montserrat.ttf", fontSizeBig, NULL)) {
+					if (al_init_primitives_addon()) {
+						check2 = true;
+					}
+					else
+						std::cout << "ERROR: Failed to install primitives" << std::endl;
+				}
+				else
+					std::cout << "ERROR: Failed to install font" << std::endl;
+			}
+			else
+				std::cout << "ERROR: Failed to install font" << std::endl;
+		}
+		else
+			std::cout << "ERROR: Failed to install ttf addon" << std::endl;
+	}
+
+	initgood = (check1 && check2);
 }
 
 allegro_c::~allegro_c()

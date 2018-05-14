@@ -62,3 +62,13 @@ void Image::toggleSelection(toggleVal select){
 
 	
 }
+
+unsigned Image::getWidth()
+{
+	return width;
+}
+
+unsigned Image::getHeight()
+{
+	return height;
+}

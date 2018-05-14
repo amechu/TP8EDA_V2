@@ -8,6 +8,7 @@
 #include <allegro5/allegro_acodec.h>
 #include <allegro5/allegro_audio.h>
 #include <allegro5\allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 
 #define BACKGROUNDMUSIC "background.wav"
 #define WRONGINPUTSFX "wrong.wav"
@@ -28,6 +29,11 @@ public:
 	void play_music(unsigned char i);
 	void updateDisplay();
 	void start_timer();
+	int fontSizeSmall = -15;
+	int fontSizeBig = -35;
+	ALLEGRO_FONT* smallfont;
+	ALLEGRO_FONT* bigfont;
+	bool initgood;
 
 private:
 

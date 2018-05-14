@@ -11,9 +11,8 @@ enum class menuError { BAD_PARSER, BAD_FILEREADER, BAD_IMAGE, BAD_ENCD , NO_ERRO
 
 class Menu {
 public:
-	Menu();
-	~Menu();
-	void const notify();
+	Menu() {}
+	~Menu() {}
 
 	bool const getParserError();
 	bool const getFilesystemError();
@@ -38,6 +37,9 @@ public:
 	bool encode();
 	void loopDecoder(ALLEGRO_EVENT_QUEUE * evq);
 	bool decode();
+
+	void drawSuccess() { drawer.drawSuccess(); }
+	void drawError() { drawer.drawError(); }
 
 	void switchPage(ALLEGRO_EVENT ev);
 

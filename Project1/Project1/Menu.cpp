@@ -4,22 +4,6 @@
 
 const int MAXTHRESHOLD = 765;
 
-
-
-Menu::Menu()
-{
-}
-
-
-Menu::~Menu()
-{
-}
-
-void const Menu::notify()
-{
-	drawer.update(this->getState());
-}
-
 menuState const Menu::getState()
 {
 	return this->state;
@@ -108,12 +92,7 @@ void Menu::loopMenu(ALLEGRO_EVENT_QUEUE * evq)
 {
 	ALLEGRO_EVENT alEv;
 
-	if (this->shouldRedraw) {
-		this->drawer.update(this->getState());
-		this->shouldRedraw = false;
-	}
-
-	this->drawer.update(this->getState());
+	this->drawer.drawMenu();
 
 	while (this->getState() == menuState::MAINMENU) {
 
@@ -145,15 +124,11 @@ void Menu::loopMenu(ALLEGRO_EVENT_QUEUE * evq)
 
 void Menu::loopEncoder(ALLEGRO_EVENT_QUEUE * evq) {
 
-	if (this->shouldRedraw) {
-		this->drawer.update(this->getState());
-		this->shouldRedraw = false;
-	}
+	this->drawer.drawEncoder(&(this->pages));
 
 	ALLEGRO_EVENT alEv;
 
 	while (this->getState() == menuState::ENCODER) {
-
 
 		Image * imPointer = NULL;
 
@@ -239,6 +214,10 @@ void Menu::loopEncoder(ALLEGRO_EVENT_QUEUE * evq) {
 				break;
 			}
 		}
+		if (this->shouldRedraw) {
+			this->drawer.drawEncoder(&(this->pages));
+			this->shouldRedraw = false;
+		}
 	}
 }
 
@@ -251,13 +230,9 @@ void Menu::loopDecoder(ALLEGRO_EVENT_QUEUE * evq)
 {
 	ALLEGRO_EVENT alEv;
 
-	if (this->shouldRedraw) {
-		this->drawer.update(this->getState());
-		this->shouldRedraw = false;
-	}
+	this->drawer.drawDecoder(&(this->pages));
 
 	while (this->getState() == menuState::DECODER) {
-
 
 		Image * imPointer = NULL;
 
@@ -344,6 +319,10 @@ void Menu::loopDecoder(ALLEGRO_EVENT_QUEUE * evq)
 				break;
 			}
 		}
+		if (this->shouldRedraw) {
+			this->drawer.drawDecoder(&(this->pages));
+			this->shouldRedraw = false;
+		}
 	}
 }
 
@@ -384,4 +363,5 @@ void Menu::checkError()
 
 void Menu::loadAllegroClass(allegro_c * alClass_) {
 	this->alClass = alClass_;
+	this->drawer.getDrawTool(alClass_);
 }
