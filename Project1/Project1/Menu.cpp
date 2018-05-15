@@ -80,7 +80,7 @@ bool Menu::loadENCD(FileReader* FR)
 	bool error = false;
 
 	if (this->encdpages.size() == 0) {
-		addPage(pagecounter + 1);
+		addPageENCD(pagecounter + 1);
 		pagecounter++;
 	}
 
