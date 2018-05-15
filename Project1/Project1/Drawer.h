@@ -12,7 +12,7 @@ public:
 	~Drawer() {}
 	void drawMenu();
 	void drawEncoder(std::vector<Page>* pages);
-	void drawDecoder(std::vector<Page>* pages);
+	void drawDecoder(std::vector<ENCDPage>* pages);
 	void drawError();
 	void drawSuccess();
 	void getDrawTool(allegro_c* altool_) { this->altool = altool_; }

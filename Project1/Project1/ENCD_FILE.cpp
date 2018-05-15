@@ -4,11 +4,38 @@ using namespace boost::filesystem;
 
 ENCD_FILE::ENCD_FILE(std::string path_)
 {
+	setText();
 }
 
 
 ENCD_FILE::~ENCD_FILE()
 {
+}
+
+void ENCD_FILE::toggleSelection(toggleVal select)
+{
+	switch (select) {
+	case toggleVal::TOGGLETRUE:
+		this->selected = true;
+		break;
+
+	case toggleVal::TOGGLEFALSE:
+		this->selected = false;
+		break;
+
+	case toggleVal::TOGGLE:
+		if (this->selected == true)
+			this->selected = false;
+		else
+			this->selected = true;
+		break;
+
+	}
+}
+
+bool ENCD_FILE::getSelectValue()
+{
+	return selected;
 }
 
 void ENCD_FILE::setName()

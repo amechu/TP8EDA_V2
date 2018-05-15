@@ -44,8 +44,10 @@ public:
 	void drawError() { drawer.drawError(); }
 
 	void switchPage(ALLEGRO_EVENT ev);
+	void switchPageENCD(ALLEGRO_EVENT ev);
 
 	void addPage(unsigned pageNum);
+	void addPageENCD(unsigned pageNum);
 
 private:
 	std::vector<Page> imgpages;

@@ -3,11 +3,15 @@
 #include <string>
 #include "boost\filesystem.hpp"
 
+enum class toggleVal { TOGGLETRUE, TOGGLE, TOGGLEFALSE };
+
 class ENCD_FILE
 {
 public:
 	ENCD_FILE(std::string path_);
 	~ENCD_FILE();
+	void toggleSelection(toggleVal select);
+	bool getSelectValue();
 
 private:
 	std::string text; //Texto dentro del archivo
