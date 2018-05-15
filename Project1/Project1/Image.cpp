@@ -16,8 +16,9 @@ Image::~Image()
 }
 
 void Image::setName()
-{
-	path p(Path.c_str());
+{	
+	path p(Path);
+
 	if (exists(p))
 	{
 		name = (p.filename().string()); //esto deberia devolver el name del archivo como un string
@@ -26,7 +27,7 @@ void Image::setName()
 
 void Image::loadBitmap()
 {
-	this->bitmap = al_load_bitmap((this->name).c_str());
+	this->bitmap = al_load_bitmap(((this->Path).c_str()));
 }
 
 void Image::destroyBitmap()
