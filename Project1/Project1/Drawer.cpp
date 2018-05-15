@@ -34,7 +34,7 @@ void Drawer::drawEncoder(std::vector<Page>* pages) {
 	al_flip_display();
 }
 
-void Drawer::drawDecoder(std::vector<Page>* pages){}
+void Drawer::drawDecoder(std::vector<ENCDPage>* pages){}
 
 void Drawer::drawError(){}
 

@@ -5,8 +5,7 @@
 #include "lodepng.h"
 #include <string>
 #include <vector>
-
-enum class toggleVal { TOGGLETRUE, TOGGLE, TOGGLEFALSE };
+#include "Definitions.h"
 
 class Image
 {
@@ -19,6 +18,7 @@ public:
 	ALLEGRO_BITMAP * bitmap; //Bitmap de allegro
 	unsigned getWidth();
 	unsigned getHeight();
+	bool error = false; //Si hubo error con la imagen
 
 private:
 	
@@ -33,8 +33,6 @@ private:
 	unsigned height; //Alto de la imagen
 
 	bool selected = false; //Si el usuario la ha seleccionado o no
-
-	bool error = false; //Si hubo error con la imagen
 
 	void setName(); /*Utiliza el path del archivo para colocarle un nombre a la foto*/
 

@@ -46,6 +46,7 @@ bool Menu::loadImages(FileReader* FR)
 {
 	unsigned counter = 1;
 	unsigned pagecounter = 0;
+	bool error = false;
 
 	if (this->imgpages.size() == 0) {
 		addPage(pagecounter + 1);
@@ -55,6 +56,8 @@ bool Menu::loadImages(FileReader* FR)
 	for (std::string path : FR->pngpaths) {
 		if (counter < 10) {
 			imgpages[pagecounter - 1].addImage(path);
+			if (imgpages[pagecounter - 1].images[counter]->error)
+				error = true;
 			counter++;
 		}
 		else {
@@ -62,14 +65,19 @@ bool Menu::loadImages(FileReader* FR)
 			pagecounter++;
 			counter = 1;
 			imgpages[pagecounter - 1].addImage(path);
+			if (imgpages[pagecounter - 1].images[counter]->error)
+				error = true;
+			counter++;
 		}
 	}
+	return error;
 }
 
 bool Menu::loadENCD(FileReader* FR)
 {
 	unsigned counter = 1;
 	unsigned pagecounter = 0;
+	bool error = false;
 
 	if (this->encdpages.size() == 0) {
 		addPage(pagecounter + 1);
@@ -79,6 +87,8 @@ bool Menu::loadENCD(FileReader* FR)
 	for (std::string path : FR->ENCDpaths) {
 		if (counter < 10) {
 			encdpages[pagecounter - 1].addENCD(path);
+			if (encdpages[pagecounter - 1].encdfiles[counter]->error)
+				error = true;
 			counter++;
 		}
 		else {
@@ -86,8 +96,12 @@ bool Menu::loadENCD(FileReader* FR)
 			pagecounter++;
 			counter = 1;
 			encdpages[pagecounter - 1].addENCD(path);
+			if (encdpages[pagecounter - 1].encdfiles[counter]->error)
+				error = true;
+			counter++;
 		}
 	}
+	return error;
 }
 
 void Menu::setState(menuState state_)

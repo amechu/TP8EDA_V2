@@ -2,8 +2,7 @@
 
 #include <string>
 #include "boost\filesystem.hpp"
-
-enum class toggleVal { TOGGLETRUE, TOGGLE, TOGGLEFALSE };
+#include "Definitions.h"
 
 class ENCD_FILE
 {
@@ -12,6 +11,7 @@ public:
 	~ENCD_FILE();
 	void toggleSelection(toggleVal select);
 	bool getSelectValue();
+	bool error; //Si hubo error con el archivo
 
 private:
 	std::string text; //Texto dentro del archivo
@@ -21,8 +21,6 @@ private:
 	std::string name; //nombre del archivo
 	
 	bool selected; //Si esta seleccionada
-
-	bool error; //Si hubo error con el archivo
 	
 	void setName(); //A partir del path, busco el nombre del archivo y lo pongo en name
 	

@@ -1,16 +1,5 @@
 #include "ENCDPage.h"
 
-
-
-ENCDPage::ENCDPage()
-{
-}
-
-
-ENCDPage::~ENCDPage()
-{
-}
-
 void ENCDPage::addENCD(std::string path_)
 {
 	if (encdfiles.size() <= encdfiles.max_size() - 1) {

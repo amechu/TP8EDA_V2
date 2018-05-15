@@ -4,6 +4,7 @@
 #include "Page.h"
 #include "Image.h"
 #include "ENCD_FILE.h"
+#include "ENCDPage.h"
 enum class menuState { MAINMENU, ENCODER, DECODER, ENCODING, DECODING, SUCCESS, ERROR, QUIT };
 
 class Drawer {

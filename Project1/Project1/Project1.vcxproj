@@ -148,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allegroClass.h" />
+    <ClInclude Include="Definitions.h" />
     <ClInclude Include="Drawer.h" />
     <ClInclude Include="ENCDPage.h" />
     <ClInclude Include="ENCD_FILE.h" />
