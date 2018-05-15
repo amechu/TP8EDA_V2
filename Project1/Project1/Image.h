@@ -7,6 +7,13 @@
 #include <vector>
 #include "Definitions.h"
 
+
+#define MAXRED	0xff000000
+#define MAXGREEN	0x00ff0000
+#define MAXBLUE 0x0000ff00
+
+
+
 class Image
 {
 public:
@@ -19,6 +26,9 @@ public:
 	unsigned getWidth();
 	unsigned getHeight();
 	bool error = false; //Si hubo error con la imagen
+
+
+	double getTreshold(unsigned width, unsigned heigth, std::vector<unsigned char>&rawpixels);	//funcion cancer que hay que arreglar
 
 private:
 	
@@ -43,5 +53,8 @@ private:
 	void decodeImage(); /*Pasandole a la funcion decode de lodepng el vector de pixeles "pixels",
 	el ancho "width", el alto "height" y el filepath "path" a la imagen, te devuelve el ancho, el alto de la imagen
 	y el vector de pixeles lleno.*/
+
+	
+
 };
 
