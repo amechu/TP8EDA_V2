@@ -4,10 +4,10 @@ using namespace boost::filesystem;
 
 Image::Image(std::string path_)
 {
+	this->Path = path_;
 	setName(); //con el path, encuentra el nombre del archivo y lo carga a "name".
 	decodeImage(); //con el path, llena el vector pixels de pixeles y carga el ancho y alto de la imagen.
 	loadBitmap(); //con el path, carga el bitmap de allegro.
-	this->Path = path_;
 }
 
 Image::~Image()
@@ -17,7 +17,7 @@ Image::~Image()
 
 void Image::setName()
 {	
-	path p(Path.c_str());
+	path p(Path);
 	if (exists(p))
 	{
 		name = (p.filename().string()); //esto deberia devolver el name del archivo como un string
@@ -26,7 +26,7 @@ void Image::setName()
 
 void Image::loadBitmap()
 {
-	this->bitmap = al_load_bitmap((this->Path).c_str());
+	this->bitmap = al_load_bitmap(((this->Path).c_str()));
 }
 
 void Image::destroyBitmap()
