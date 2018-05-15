@@ -22,7 +22,7 @@ public:
 
 	void toggleSelection(toggleVal select);
 	bool getSelectValue() { return this->selected; }
-	ALLEGRO_BITMAP * bitmap; //Bitmap de allegro
+	ALLEGRO_BITMAP * bitmap = NULL; //Bitmap de allegro
 	unsigned getWidth();
 	unsigned getHeight();
 	bool error = false; //Si hubo error con la imagen

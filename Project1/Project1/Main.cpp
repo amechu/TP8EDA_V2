@@ -10,25 +10,22 @@ int main(int argc, char*argv[]) {
 	Menu mainMenu;
 	FileReader fileReader;
 
-	mainMenu.setParserError(parser.Read(argc, argv));					//Se fija si hubo
-	mainMenu.setFilesystemError(fileReader.load(parser.getPath()));		//algun error a lo largo del
-	mainMenu.setImageError(mainMenu.loadImages(&fileReader));						//seteo inicial del programa
-	mainMenu.setENCDError(mainMenu.loadENCD(&fileReader));							//y si lo hay, lo carga
+	allegro_c allClass;
+	if (allClass.initgood) {
+		allClass.load_music(BACKGROUNDMUSIC, 0);
+		allClass.load_music(WRONGINPUTSFX, 1);
+		allClass.play_music(0);
 
-	mainMenu.checkError();												//Se fija que errores hubo y cambia el estado y variable de error acorde
+		mainMenu.setParserError(parser.Read(argc, argv));					//Se fija si hubo
+		mainMenu.setFilesystemError(fileReader.load(parser.getPath()));		//algun error a lo largo del
+		mainMenu.setImageError(mainMenu.loadImages(&fileReader));						//seteo inicial del programa
+		mainMenu.setENCDError(mainMenu.loadENCD(&fileReader));							//y si lo hay, lo carga
+		mainMenu.loadAllegroClass(&allClass);
 
-	if ((mainMenu.getError() != menuError::NO_ERROR)) {					//Si hubo algun error										//lo reporto al usuario y cierro programa
-		getchar();
-	}
-	else {
+		mainMenu.checkError();												//Se fija que errores hubo y cambia el estado y variable de error acorde
 
-		allegro_c allClass;
-		if (allClass.initgood) {
-			allClass.load_music(BACKGROUNDMUSIC, 0);
-			allClass.load_music(WRONGINPUTSFX, 1);
-			allClass.play_music(0);
+		if ((mainMenu.getError() == menuError::NO_ERROR)) {
 
-			mainMenu.loadAllegroClass(&allClass);
 
 			mainMenu.setState(menuState::MAINMENU);							//Sino, comienzo mainmenu, espero que el usuario diga si quiere comprimir
 			mainMenu.loopMenu(allClass.getEventQueue());					//o decomprimir. Siempre haciendo un notify() por cada cambio.

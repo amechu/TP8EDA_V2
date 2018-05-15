@@ -27,6 +27,7 @@ void Image::setName()
 
 void Image::loadBitmap()
 {
+	this->bitmap = al_create_bitmap((this->width), (this->height));
 	this->bitmap = al_load_bitmap(((this->Path).c_str()));
 }
 
