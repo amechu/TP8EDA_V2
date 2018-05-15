@@ -51,3 +51,8 @@ void ENCD_FILE::setText()
 {
 	//magia de ari
 }
+
+
+std::string ENCD_FILE::getName() { 
+	return this->name; 
+}

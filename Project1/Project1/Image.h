@@ -21,7 +21,7 @@ public:
 	~Image();
 
 	void toggleSelection(toggleVal select);
-	bool getSelectValue() { return selected; }
+	bool getSelectValue() { return this->selected; }
 	ALLEGRO_BITMAP * bitmap; //Bitmap de allegro
 	unsigned getWidth();
 	unsigned getHeight();

@@ -23,7 +23,9 @@ private:
 	allegro_c * altool;
 
 	void drawButton(int x, int y, std::string msg);
+	void drawButton(int x, int y, int sizex, int sizey, bool selected, std::string msg);
 	void drawMosaic(int pos, Image* img);
+	void drawMosaic(int pos, ENCD_FILE * img);
 
 	const int width = 300;
 	const int height = 150;

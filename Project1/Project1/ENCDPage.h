@@ -19,6 +19,7 @@ public:
 	unsigned char getPageNumber() { return pageNumber; }
 
 	std::array<ENCD_FILE*, 9> encdfiles = { NULL };
+
 private:
 	unsigned char pageNumber;
 	bool selected;

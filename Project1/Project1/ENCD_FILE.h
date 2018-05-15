@@ -11,6 +11,7 @@ public:
 	~ENCD_FILE();
 	void toggleSelection(toggleVal select);
 	bool getSelectValue();
+	std::string getName();
 	bool error; //Si hubo error con el archivo
 
 private:
