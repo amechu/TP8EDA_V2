@@ -1,11 +1,9 @@
 #include "Page.h"
 
-void Page::addImage(std::string path_, unsigned width_, unsigned height_) {
-	/*
+void Page::addImage(std::string path_) {
 	if (images.size() <= images.max_size() - 1) {
-		images[images.size()] = new Image(path_, width_, height_);
+		images[images.size()] = new Image(path_);
 	 }
-	*/
 }
 
 bool const Page::isSelected()

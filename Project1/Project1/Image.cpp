@@ -4,7 +4,6 @@ using namespace boost::filesystem;
 
 Image::Image(std::string path_)
 {
-	/*hace tu magia ariel*/
 	setName(); //con el path, encuentra el nombre del archivo y lo carga a "name".
 	decodeImage(); //con el path, llena el vector pixels de pixeles y carga el ancho y alto de la imagen.
 	loadBitmap(); //con el path, carga el bitmap de allegro.
@@ -26,11 +25,12 @@ void Image::setName()
 
 void Image::loadBitmap()
 {
+	this->bitmap = al_load_bitmap((this->Path).c_str());
 }
 
 void Image::destroyBitmap()
 {
-	
+	al_destroy_bitmap(this->bitmap);
 }
 
 void Image::decodeImage()
@@ -59,8 +59,6 @@ void Image::toggleSelection(toggleVal select){
 		break;
 
 	}
-
-	
 }
 
 unsigned Image::getWidth()

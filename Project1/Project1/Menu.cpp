@@ -42,14 +42,48 @@ bool const Menu::getFilesystemError()
 	return filesystemError;
 }
 
-bool Menu::loadImages()
+bool Menu::loadImages(FileReader* FR)
 {
-	return false;
+	unsigned counter = 1;
+	unsigned pagecounter = 0;
+
+	if (this->pages.size() == 0) {
+		addPage(pagecounter + 1);
+		pagecounter++;
+	}
+
+	for (std::string path : FR->pngpaths) {
+		if (counter < 10) {
+			pages[pagecounter - 1].addImage(path);
+			counter++;
+		}
+		else {
+			addPage(pagecounter + 1);
+			pagecounter++;
+		}
+	}
 }
 
-bool Menu::loadENCD()
+bool Menu::loadENCD(FileReader* FR)
 {
-	return false;
+	unsigned counter = 1;
+	unsigned pagecounter = 0;
+
+	if (this->encdpages.size() == 0) {
+		addPage(pagecounter + 1);
+		pagecounter++;
+	}
+
+	for (std::string path : FR->ENCDpaths) {
+		if (counter < 10) {
+			encdpages[pagecounter - 1].addImage(path);
+			counter++;
+		}
+		else {
+			addPage(pagecounter + 1);
+			pagecounter++;
+		}
+	}
 }
 
 void Menu::setState(menuState state_)
@@ -106,7 +140,7 @@ void Menu::loopMenu(ALLEGRO_EVENT_QUEUE * evq)
 					this->setState(menuState::ENCODER);
 				else if (alEv.keyboard.keycode == ALLEGRO_KEY_D)
 					this->setState(menuState::DECODER);
-				else if (alEv.keyboard.keycode == ALLEGRO_KEY_Q || ALLEGRO_KEY_ESCAPE)
+				else if (alEv.keyboard.keycode == ALLEGRO_KEY_Q || alEv.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
 					this->setState(menuState::QUIT);
 				else
 					this->alClass->play_music(WRONG);
@@ -349,6 +383,11 @@ void Menu::switchPage(ALLEGRO_EVENT ev)
 			currentPage++; //Si no es la página final, puedo ascender.
 		}
 	}
+}
+
+void Menu::addPage(unsigned pageNum)
+{
+	pages.push_back(*(new Page(pageNum)));
 }
 
 void Menu::checkError()

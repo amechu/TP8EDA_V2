@@ -2,7 +2,7 @@
 
 using namespace boost::filesystem;
 
-ENCD_FILE::ENCD_FILE()
+ENCD_FILE::ENCD_FILE(std::string path_)
 {
 }
 

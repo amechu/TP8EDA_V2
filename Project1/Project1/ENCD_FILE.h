@@ -6,7 +6,7 @@
 class ENCD_FILE
 {
 public:
-	ENCD_FILE();
+	ENCD_FILE(std::string path_);
 	~ENCD_FILE();
 
 private:

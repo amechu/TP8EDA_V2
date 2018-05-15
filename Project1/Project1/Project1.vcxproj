@@ -137,6 +137,7 @@
   <ItemGroup>
     <ClCompile Include="allegroClass.cpp" />
     <ClCompile Include="Drawer.cpp" />
+    <ClCompile Include="ENCDPage.cpp" />
     <ClCompile Include="ENCD_FILE.cpp" />
     <ClCompile Include="FileReader.cpp" />
     <ClCompile Include="Image.cpp" />
@@ -148,6 +149,7 @@
   <ItemGroup>
     <ClInclude Include="allegroClass.h" />
     <ClInclude Include="Drawer.h" />
+    <ClInclude Include="ENCDPage.h" />
     <ClInclude Include="ENCD_FILE.h" />
     <ClInclude Include="FileReader.h" />
     <ClInclude Include="Image.h" />

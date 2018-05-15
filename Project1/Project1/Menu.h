@@ -4,6 +4,8 @@ class allegro_c;
 
 #include "Page.h"
 #include "Drawer.h"
+#include "FileReader.h"
+#include "ENCDPage.h"
 #include <vector>
 
 enum class menuError { BAD_PARSER, BAD_FILEREADER, BAD_IMAGE, BAD_ENCD , NO_ERROR};
@@ -16,8 +18,8 @@ public:
 
 	bool const getParserError();
 	bool const getFilesystemError();
-	bool loadImages();
-	bool loadENCD();
+	bool loadImages(FileReader* FR);
+	bool loadENCD(FileReader* FR);
 
 	menuState const getState();
 	menuError const getError();
@@ -43,9 +45,11 @@ public:
 
 	void switchPage(ALLEGRO_EVENT ev);
 
+	void addPage(unsigned pageNum);
 
 private:
-	std::vector<Page> pages;
+	std::vector<Page> imgpages;
+	std::vector<ENCDPage> encdpages;
 	unsigned char currentPage;
 
 	allegro_c * alClass;

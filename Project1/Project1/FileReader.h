@@ -17,10 +17,6 @@ public:
 
 	bool load(string);
 
-	
-
-
-private:
 	vector<string> pngpaths;
 	vector<string> ENCDpaths;
 };
