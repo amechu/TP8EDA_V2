@@ -74,14 +74,14 @@ bool Menu::loadImages(FileReader* FR)
 
 		if (lastPath == "") {
 			for (; counter != 10; counter++)
-				imgpages[pagecounter - 1].addImage(lastPath);
+				imgpages[pagecounter - 1]->addImage(lastPath);
 		}
 		else {
 			if (counter < 10) {
 
-				imgpages[pagecounter - 1].addImage(path);
+				imgpages[pagecounter - 1]->addImage(path);
 
-				if (imgpages[pagecounter - 1].images[counter - 1]->error)
+				if (imgpages[pagecounter - 1]->images[counter - 1]->error)
 					error = true;
 				counter++;
 			}
@@ -89,8 +89,8 @@ bool Menu::loadImages(FileReader* FR)
 				addPage(pagecounter + 1);
 				pagecounter++;
 				counter = 1;
-				imgpages[pagecounter - 1].addImage(path);
-				if (imgpages[pagecounter - 1].images[counter - 1]->error)
+				imgpages[pagecounter - 1]->addImage(path);
+				if (imgpages[pagecounter - 1]->images[counter - 1]->error)
 					error = true;
 				counter++;
 			}
@@ -115,8 +115,8 @@ bool Menu::loadENCD(FileReader* FR)
 
 	for (std::string path : FR->ENCDpaths) {
 		if (counter < 10) {
-			encdpages[pagecounter - 1].addENCD(path);
-			if (encdpages[pagecounter - 1].encdfiles[counter - 1]->error)
+			encdpages[pagecounter -1]->addENCD(path);
+			if (encdpages[pagecounter -1]->encdfiles[counter - 1]->error)
 				error = true;
 			counter++;
 		}
@@ -124,8 +124,8 @@ bool Menu::loadENCD(FileReader* FR)
 			addPage(pagecounter + 1);
 			pagecounter++;
 			counter = 1;
-			encdpages[pagecounter - 1].addENCD(path);
-			if (encdpages[pagecounter - 1].encdfiles[counter - 1]->error)
+			encdpages[pagecounter -1]->addENCD(path);
+			if (encdpages[pagecounter -1]->encdfiles[counter - 1]->error)
 				error = true;
 			counter++;
 		}
@@ -214,7 +214,7 @@ void Menu::loopEncoder(ALLEGRO_EVENT_QUEUE * evq) {
 		Image * imPointer = NULL;
 
 		if (this->imgpages.size() > 0) //Si hay almenos una página, hago que imPointer apunte a esa página. Si no la hay, permanece en NULL. IMPORTANTE PARA LOS FOR.
-			imPointer = imgpages[currentPage].getImage(1);
+			imPointer = imgpages[currentPage]->getImage(1);
 
 		bool canSwitchModes = false;
 
@@ -225,24 +225,24 @@ void Menu::loopEncoder(ALLEGRO_EVENT_QUEUE * evq) {
 			case ALLEGRO_EVENT_KEY_DOWN:
 				switch (alEv.keyboard.keycode) {
 
-				case ALLEGRO_KEY_1:	if ((imPointer = imgpages[currentPage].getImage(1)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
-				case ALLEGRO_KEY_2:	if ((imPointer = imgpages[currentPage].getImage(2)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
-				case ALLEGRO_KEY_3:	if ((imPointer = imgpages[currentPage].getImage(3)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
-				case ALLEGRO_KEY_4:	if ((imPointer = imgpages[currentPage].getImage(4)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
-				case ALLEGRO_KEY_5:	if ((imPointer = imgpages[currentPage].getImage(5)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
-				case ALLEGRO_KEY_6:	if ((imPointer = imgpages[currentPage].getImage(6)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
-				case ALLEGRO_KEY_7:	if ((imPointer = imgpages[currentPage].getImage(7)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
-				case ALLEGRO_KEY_8:	if ((imPointer = imgpages[currentPage].getImage(8)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
-				case ALLEGRO_KEY_9:	if ((imPointer = imgpages[currentPage].getImage(9)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_1:	if ((imPointer = imgpages[currentPage]->getImage(1)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_2:	if ((imPointer = imgpages[currentPage]->getImage(2)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_3:	if ((imPointer = imgpages[currentPage]->getImage(3)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_4:	if ((imPointer = imgpages[currentPage]->getImage(4)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_5:	if ((imPointer = imgpages[currentPage]->getImage(5)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_6:	if ((imPointer = imgpages[currentPage]->getImage(6)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_7:	if ((imPointer = imgpages[currentPage]->getImage(7)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_8:	if ((imPointer = imgpages[currentPage]->getImage(8)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_9:	if ((imPointer = imgpages[currentPage]->getImage(9)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
 
 
 
 				case ALLEGRO_KEY_Q: this->setState(menuState::QUIT); break; //Si todo la Q, debo querer salir del programa.
 
 				case ALLEGRO_KEY_ENTER: //Si toco ENTER, procedo a encodear lo que esté seleccionado. Si no hay nada seleccionado, informo a través de un efecto de sonido.
-					for (Page page : this->imgpages)
+					for (Page* page : this->imgpages)
 						for (int i = 0; (imPointer != NULL) && (i < 9) && canSwitchModes == false; i++) { //Si aun no llegué a un puntero a NULL (Que implica que los siguientes también lo son) y aun no encontré almenos una imagen seleccionada
-							if ((imPointer = page.getImage(i)) != NULL) { //...Sigo loopeando hasta encontrar una seleccionada o llegar al final de la lista.
+							if ((imPointer = page->getImage(i)) != NULL) { //...Sigo loopeando hasta encontrar una seleccionada o llegar al final de la lista.
 								canSwitchModes = (*imPointer).getSelectValue();
 							}
 						}
@@ -259,9 +259,9 @@ void Menu::loopEncoder(ALLEGRO_EVENT_QUEUE * evq) {
 
 				case ALLEGRO_KEY_A: //Si toco la A debo poner todo en "seleccionado".
 
-					for (Page page : this->imgpages)
+					for (Page* page : this->imgpages)
 						for (int i = 0; (imPointer != NULL) && (i < 9); i++) {
-							if ((imPointer = page.getImage(i)) != NULL) {
+							if ((imPointer = page->getImage(i+1)) != NULL) {
 								(*imPointer).toggleSelection(toggleVal::TOGGLETRUE);
 							}
 						}
@@ -271,9 +271,9 @@ void Menu::loopEncoder(ALLEGRO_EVENT_QUEUE * evq) {
 
 				case ALLEGRO_KEY_N: //Si toco la N debo poner todo en "deseleccionado".
 
-					for (Page page : this->imgpages)
+					for (Page* page : this->imgpages)
 						for (int i = 0; (imPointer != NULL) && (i < 9); i++) {
-							if ((imPointer = page.getImage(i)) != NULL) {
+							if ((imPointer = page->getImage(i+1)) != NULL) {
 								(*imPointer).toggleSelection(toggleVal::TOGGLEFALSE);
 							}
 						}
@@ -318,7 +318,7 @@ void Menu::loopDecoder(ALLEGRO_EVENT_QUEUE * evq)
 		ENCD_FILE * imPointer = NULL;
 
 		if (this->encdpages.size() > 0) //Si hay almenos una página, hago que imPointer apunte a esa página. Si no la hay, permanece en NULL. IMPORTANTE PARA LOS FOR.
-			imPointer = encdpages[currentPage].getENCD(1);
+			imPointer = encdpages[currentPage]->getENCD(1);
 
 		bool canSwitchModes = false; //Booleano que me indica si puedo 
 
@@ -329,24 +329,24 @@ void Menu::loopDecoder(ALLEGRO_EVENT_QUEUE * evq)
 			case ALLEGRO_EVENT_KEY_DOWN:
 				switch (alEv.keyboard.keycode) {
 
-				case ALLEGRO_KEY_1:	if ((imPointer = encdpages[currentPage].getENCD(1)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break; //Si toco un número, debo cambiar el valor de selección
-				case ALLEGRO_KEY_2:	if ((imPointer = encdpages[currentPage].getENCD(2)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break; //de la imagen en pantalla a la cual corresponde ese número.
-				case ALLEGRO_KEY_3:	if ((imPointer = encdpages[currentPage].getENCD(3)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
-				case ALLEGRO_KEY_4:	if ((imPointer = encdpages[currentPage].getENCD(4)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
-				case ALLEGRO_KEY_5:	if ((imPointer = encdpages[currentPage].getENCD(5)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
-				case ALLEGRO_KEY_6:	if ((imPointer = encdpages[currentPage].getENCD(6)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
-				case ALLEGRO_KEY_7:	if ((imPointer = encdpages[currentPage].getENCD(7)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
-				case ALLEGRO_KEY_8:	if ((imPointer = encdpages[currentPage].getENCD(8)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
-				case ALLEGRO_KEY_9:	if ((imPointer = encdpages[currentPage].getENCD(9)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_1:	if ((imPointer = encdpages[currentPage]->getENCD(1)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break; //Si toco un número, debo cambiar el valor de selección
+				case ALLEGRO_KEY_2:	if ((imPointer = encdpages[currentPage]->getENCD(2)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break; //de la imagen en pantalla a la cual corresponde ese número.
+				case ALLEGRO_KEY_3:	if ((imPointer = encdpages[currentPage]->getENCD(3)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_4:	if ((imPointer = encdpages[currentPage]->getENCD(4)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_5:	if ((imPointer = encdpages[currentPage]->getENCD(5)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_6:	if ((imPointer = encdpages[currentPage]->getENCD(6)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_7:	if ((imPointer = encdpages[currentPage]->getENCD(7)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_8:	if ((imPointer = encdpages[currentPage]->getENCD(8)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_9:	if ((imPointer = encdpages[currentPage]->getENCD(9)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
 
 
 
 				case ALLEGRO_KEY_Q: this->setState(menuState::QUIT); break; //Si todo la Q, debo querer salir del programa.
 
 				case ALLEGRO_KEY_ENTER: //Si toco ENTER, procedo a decodear lo que esté seleccionado. Si no hay nada seleccionado, informo a través de un efecto de sonido.
-					for (ENCDPage page : this->encdpages)
+					for (ENCDPage* page : this->encdpages)
 						for (int i = 0; (imPointer != NULL) && (i < 9) && canSwitchModes == false; i++) { //Si no llegué a un NULL pointer (o sea que aún podría haber imagenes seleccionadas) y aún no encontré una seleccionada....
-							if ((imPointer = page.getENCD(i)) != NULL) { //...Sigo buscando hasta encontrar una seleccionada.
+							if ((imPointer = page->getENCD(i)) != NULL) { //...Sigo buscando hasta encontrar una seleccionada.
 								canSwitchModes = (*imPointer).getSelectValue();
 							}
 						}
@@ -363,9 +363,9 @@ void Menu::loopDecoder(ALLEGRO_EVENT_QUEUE * evq)
 
 				case ALLEGRO_KEY_A: //Si toco la A debo poner todo en "seleccionado".
 
-					for (ENCDPage page : this->encdpages)
+					for (ENCDPage* page : this->encdpages)
 						for (int i = 0; (imPointer != NULL) && (i < 9); i++) {
-							if ((imPointer = page.getENCD(i)) != NULL) {
+							if ((imPointer = page->getENCD(i)) != NULL) {
 								(*imPointer).toggleSelection(toggleVal::TOGGLETRUE);
 							}
 						}
@@ -375,9 +375,9 @@ void Menu::loopDecoder(ALLEGRO_EVENT_QUEUE * evq)
 
 				case ALLEGRO_KEY_N: //Si toco la N debo poner todo en "deseleccionado".
 
-					for (ENCDPage page : this->encdpages)
+					for (ENCDPage* page : this->encdpages)
 						for (int i = 0; (imPointer != NULL) && (i < 9); i++) {
-							if ((imPointer = page.getENCD(i)) != NULL) {
+							if ((imPointer = page->getENCD(i)) != NULL) {
 								(*imPointer).toggleSelection(toggleVal::TOGGLEFALSE);
 							}
 						}
@@ -455,11 +455,11 @@ void Menu::switchPageENCD(ALLEGRO_EVENT ev)
 void Menu::addPage(unsigned pageNum)
 {
 	Page* page = new Page(pageNum);
-	imgpages.push_back(*page);
+	imgpages.push_back(page);
 }
 void Menu::addPageENCD(unsigned pageNum)
 {
-	encdpages.push_back(*(new ENCDPage(pageNum)));
+	encdpages.push_back((new ENCDPage(pageNum)));
 }
 
 void Menu::checkError()

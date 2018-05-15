@@ -52,8 +52,8 @@ public:
 	void addPageENCD(unsigned pageNum);
 
 private:
-	std::vector<Page> imgpages;
-	std::vector<ENCDPage> encdpages;
+	std::vector<Page*> imgpages;
+	std::vector<ENCDPage*> encdpages;
 	unsigned char currentPage;
 
 	allegro_c * alClass;

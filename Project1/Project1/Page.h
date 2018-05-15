@@ -9,7 +9,7 @@
 class Page
 {
 public:
-	Page(unsigned char pageNumber_) : pageNumber(pageNumber_) {};
+	Page(unsigned char pageNumber_) : pageNumber(pageNumber_) { if (pageNumber_ == 1) selected = true; };
 	~Page() { for (Image* img : images) { delete img; } };
 
 	void addImage (std::string path_);
@@ -23,7 +23,7 @@ public:
 
 private:
 	unsigned char pageNumber;
-	bool selected;
+	bool selected = false;
 	unsigned totalimages = 0;
 };
 

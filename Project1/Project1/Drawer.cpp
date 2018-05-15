@@ -17,19 +17,20 @@ void Drawer::drawMenu() {
 	al_flip_display();
 }
 
-void Drawer::drawEncoder(std::vector<Page>* pages) {
+void Drawer::drawEncoder(std::vector<Page*>* pages) {
 
 	bool atLeastOneImg = false;
 	bool foundPage = false;
 	unsigned counter = 1;
 
 	al_clear_to_color(al_map_rgb(0, 0, 0));
-	al_draw_text(altool->bigfont, al_map_rgb(196, 100, 2), SCREEN_W / 2, SCREEN_H / 9 - altool->fontSizeBig / 2, ALLEGRO_ALIGN_CENTER, "Which images do you want Gary to encode?");
+	al_draw_text(altool->bigfont, al_map_rgb(196, 100, 2), SCREEN_W / 2, 25, ALLEGRO_ALIGN_CENTER, "Which images do you want Gary to encode?");
 
-	for (Page& page : *pages) {
-		if (page.isSelected() && !foundPage) {
+	for (Page* page : *pages) {
+		if (page->isSelected() && !foundPage) {
 			foundPage = true;
-			for (Image* img : page.images) {
+			al_draw_text(altool->bigfont, al_color_name("orange"), SCREEN_W / 2, SCREEN_H - 50, NULL, (std::to_string(page->getPageNumber())).c_str());
+			for (Image* img : page->images) {
 				if ((counter < 10) && (img != NULL)) {
 					drawMosaic(counter, img);
 					counter++;
@@ -45,7 +46,7 @@ void Drawer::drawEncoder(std::vector<Page>* pages) {
 	al_flip_display();
 }
 
-void Drawer::drawDecoder(std::vector<ENCDPage>* pages) {
+void Drawer::drawDecoder(std::vector<ENCDPage*>* pages) {
 	
 	bool atLeastOneImg = false;
 	bool foundPage = false;
@@ -58,10 +59,10 @@ void Drawer::drawDecoder(std::vector<ENCDPage>* pages) {
 	al_clear_to_color(al_map_rgb(170, 160, 57));
 	al_draw_text(altool->bigfont, al_map_rgb(196, 100, 2), SCREEN_W / 2, SCREEN_H / 9 - altool->fontSizeBig / 2, ALLEGRO_ALIGN_CENTER, "Which images do you want Gary to decode?");
 
-	for (ENCDPage encdPage : *pages) {
-		if (encdPage.isSelected() && !foundPage) {
+	for (ENCDPage* encdPage : *pages) {
+		if (encdPage->isSelected() && !foundPage) {
 			foundPage = true;
-			for (ENCD_FILE * encdfile : encdPage.encdfiles) {
+			for (ENCD_FILE * encdfile : encdPage->encdfiles) {
 				if ((counter < 10) && (encdfile != NULL)){
 					drawMosaic(counter, encdfile);
 					counter++;
@@ -136,51 +137,51 @@ void Drawer::drawMosaic(int pos, Image* img) {
 			break;
 		case 2:
 			if (img->getSelectValue())
-				al_draw_tinted_scaled_bitmap(img->bitmap, al_color_name("red"), 0, 0, img->getWidth(), img->getHeight(), pos2_w - 10, pos1_h - 10, photo_w + 20, photo_h + 20, NULL);
+				al_draw_tinted_scaled_bitmap(img->bitmap, al_color_name("red"), 0, 0, img->getWidth(), img->getHeight(), pos2_w, pos2_h, photo_w, photo_h, NULL);
 			else
-				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos2_w, pos1_h, photo_w, photo_h, NULL);
+				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos2_w, pos2_h, photo_w, photo_h, NULL);
 			break;
 		case 3:
 			if (img->getSelectValue())
-				al_draw_tinted_scaled_bitmap(img->bitmap, al_color_name("red"), 0, 0, img->getWidth(), img->getHeight(), pos3_w - 10, pos1_h - 10, photo_w + 20, photo_h + 20, NULL);
+				al_draw_tinted_scaled_bitmap(img->bitmap, al_color_name("red"), 0, 0, img->getWidth(), img->getHeight(), pos3_w, pos3_h, photo_w, photo_h, NULL);
 			else
-				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos3_w, pos1_h, photo_w, photo_h, NULL);
+				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos3_w, pos3_h, photo_w, photo_h, NULL);
 			break;
 		case 4:
 			if (img->getSelectValue())
-				al_draw_tinted_scaled_bitmap(img->bitmap, al_color_name("red"), 0, 0, img->getWidth(), img->getHeight(), pos4_w - 10, pos1_h - 10, photo_w + 20, photo_h + 20, NULL);
+				al_draw_tinted_scaled_bitmap(img->bitmap, al_color_name("red"), 0, 0, img->getWidth(), img->getHeight(), pos4_w, pos4_h, photo_w, photo_h, NULL);
 			else
-				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos4_w, pos1_h, photo_w, photo_h, NULL);
+				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos4_w, pos4_h, photo_w, photo_h, NULL);
 			break;
 		case 5:
 			if (img->getSelectValue())
-				al_draw_tinted_scaled_bitmap(img->bitmap, al_color_name("red"), 0, 0, img->getWidth(), img->getHeight(), pos5_w - 10, pos1_h - 10, photo_w + 20, photo_h + 20, NULL);
+				al_draw_tinted_scaled_bitmap(img->bitmap, al_color_name("red"), 0, 0, img->getWidth(), img->getHeight(), pos5_w, pos5_h, photo_w, photo_h, NULL);
 			else
-				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos5_w, pos1_h, photo_w, photo_h, NULL);
+				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos5_w, pos5_h, photo_w, photo_h, NULL);
 			break;
 		case 6:
 			if (img->getSelectValue())
-				al_draw_tinted_scaled_bitmap(img->bitmap, al_color_name("red"), 0, 0, img->getWidth(), img->getHeight(), pos6_w - 10, pos1_h - 10, photo_w + 20, photo_h + 20, NULL);
+				al_draw_tinted_scaled_bitmap(img->bitmap, al_color_name("red"), 0, 0, img->getWidth(), img->getHeight(), pos6_w, pos6_h, photo_w, photo_h, NULL);
 			else
-				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos6_w, pos1_h, photo_w, photo_h, NULL);
+				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos6_w, pos6_h, photo_w, photo_h, NULL);
 			break;
 		case 7:
 			if (img->getSelectValue())
-				al_draw_tinted_scaled_bitmap(img->bitmap, al_color_name("red"), 0, 0, img->getWidth(), img->getHeight(), pos7_w - 10, pos1_h - 10, photo_w + 20, photo_h + 20, NULL);
+				al_draw_tinted_scaled_bitmap(img->bitmap, al_color_name("red"), 0, 0, img->getWidth(), img->getHeight(), pos7_w, pos7_h, photo_w, photo_h, NULL);
 			else
-				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos7_w, pos1_h, photo_w, photo_h, NULL);
+				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos7_w, pos7_h, photo_w, photo_h, NULL);
 			break;
 		case 8:
 			if (img->getSelectValue())
-				al_draw_tinted_scaled_bitmap(img->bitmap, al_color_name("red"), 0, 0, img->getWidth(), img->getHeight(), pos8_w - 10, pos1_h - 10, photo_w + 20, photo_h + 20, NULL);
+				al_draw_tinted_scaled_bitmap(img->bitmap, al_color_name("red"), 0, 0, img->getWidth(), img->getHeight(), pos8_w, pos8_h, photo_w, photo_h, NULL);
 			else
-				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos8_w, pos1_h, photo_w, photo_h, NULL);
+				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos8_w, pos8_h, photo_w, photo_h, NULL);
 			break;
 		case 9:
 			if (img->getSelectValue())
-				al_draw_tinted_scaled_bitmap(img->bitmap, al_color_name("red"), 0, 0, img->getWidth(), img->getHeight(), pos9_w - 10, pos1_h - 10, photo_w + 20, photo_h + 20, NULL);
+				al_draw_tinted_scaled_bitmap(img->bitmap, al_color_name("red"), 0, 0, img->getWidth(), img->getHeight(), pos9_w, pos9_h, photo_w, photo_h, NULL);
 			else
-				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos9_w, pos1_h, photo_w, photo_h, NULL);
+				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos9_w, pos9_h, photo_w, photo_h, NULL);
 			break;
 		}
 	}

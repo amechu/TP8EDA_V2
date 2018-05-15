@@ -12,8 +12,8 @@ public:
 	Drawer() {}
 	~Drawer() {}
 	void drawMenu();
-	void drawEncoder(std::vector<Page>* pages);
-	void drawDecoder(std::vector<ENCDPage>* pages);
+	void drawEncoder(std::vector<Page*>* pages);
+	void drawDecoder(std::vector<ENCDPage*>* pages);
 	void drawError();
 	void drawSuccess();
 	void getDrawTool(allegro_c* altool_) { this->altool = altool_; }
@@ -49,6 +49,6 @@ private:
 	const unsigned pos7_h = 5 * SCREEN_H / 7;
 	const unsigned pos8_w = 3 * SCREEN_W / 7;
 	const unsigned pos8_h = 5 * SCREEN_H / 7;
-	const unsigned pos9_w = 3 * SCREEN_W / 7;
+	const unsigned pos9_w = 5 * SCREEN_W / 7;
 	const unsigned pos9_h = 5 * SCREEN_H / 7;
 };
