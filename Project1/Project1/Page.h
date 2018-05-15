@@ -19,9 +19,11 @@ public:
 
 	unsigned char getPageNumber() { return pageNumber; }
 
-	std::array<Image*, 9> images = { NULL };
+	std::array<Image*, 9> images;
+
 private:
 	unsigned char pageNumber;
 	bool selected;
+	unsigned totalimages = 0;
 };
 

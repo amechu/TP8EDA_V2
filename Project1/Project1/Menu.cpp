@@ -56,7 +56,7 @@ bool Menu::loadImages(FileReader* FR)
 	for (std::string path : FR->pngpaths) {
 		if (counter < 10) {
 			imgpages[pagecounter - 1].addImage(path);
-			if (imgpages[pagecounter - 1].images[counter]->error)
+			if (imgpages[pagecounter - 1].images[counter-1]->error)
 				error = true;
 			counter++;
 		}
@@ -65,7 +65,7 @@ bool Menu::loadImages(FileReader* FR)
 			pagecounter++;
 			counter = 1;
 			imgpages[pagecounter - 1].addImage(path);
-			if (imgpages[pagecounter - 1].images[counter]->error)
+			if (imgpages[pagecounter - 1].images[counter-1]->error)
 				error = true;
 			counter++;
 		}
@@ -87,7 +87,7 @@ bool Menu::loadENCD(FileReader* FR)
 	for (std::string path : FR->ENCDpaths) {
 		if (counter < 10) {
 			encdpages[pagecounter - 1].addENCD(path);
-			if (encdpages[pagecounter - 1].encdfiles[counter]->error)
+			if (encdpages[pagecounter - 1].encdfiles[counter-1]->error)
 				error = true;
 			counter++;
 		}
@@ -96,7 +96,7 @@ bool Menu::loadENCD(FileReader* FR)
 			pagecounter++;
 			counter = 1;
 			encdpages[pagecounter - 1].addENCD(path);
-			if (encdpages[pagecounter - 1].encdfiles[counter]->error)
+			if (encdpages[pagecounter - 1].encdfiles[counter-1]->error)
 				error = true;
 			counter++;
 		}
@@ -425,7 +425,8 @@ void Menu::switchPageENCD(ALLEGRO_EVENT ev)
 
 void Menu::addPage(unsigned pageNum)
 {
-	imgpages.push_back(*(new Page(pageNum)));
+	Page* page = new Page(pageNum);
+	imgpages.push_back(*page);
 }
 void Menu::addPageENCD(unsigned pageNum)
 {
