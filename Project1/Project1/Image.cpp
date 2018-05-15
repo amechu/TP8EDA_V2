@@ -7,6 +7,7 @@ Image::Image(std::string path_)
 	setName(); //con el path, encuentra el nombre del archivo y lo carga a "name".
 	decodeImage(); //con el path, llena el vector pixels de pixeles y carga el ancho y alto de la imagen.
 	loadBitmap(); //con el path, carga el bitmap de allegro.
+	this->Path = path_;
 }
 
 Image::~Image()
