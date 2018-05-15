@@ -29,17 +29,29 @@ void Menu::setFilesystemError(bool error)
 	filesystemError = error;
 }
 
+bool const Menu::getFilesystemError()
+{
+	return filesystemError;
+}
+
 void Menu::setImageError(bool error)
 {
+	this->imageError = error;
+}
+
+bool const Menu::getENCDError()
+{
+	return ENCDerror;
 }
 
 void Menu::setENCDError(bool error)
 {
+	this->ENCDerror = true;
 }
 
-bool const Menu::getFilesystemError()
+bool const Menu::getImageError()
 {
-	return filesystemError;
+	return imageError;
 }
 
 bool Menu::loadImages(FileReader* FR)
@@ -47,29 +59,46 @@ bool Menu::loadImages(FileReader* FR)
 	unsigned counter = 1;
 	unsigned pagecounter = 0;
 	bool error = false;
+	bool atLeastOnePNG = false;
 
 	if (this->imgpages.size() == 0) {
 		addPage(pagecounter + 1);
 		pagecounter++;
 	}
 
+	std::string lastPath = "";
+
 	for (std::string path : FR->pngpaths) {
-		if (counter < 10) {
-			imgpages[pagecounter - 1].addImage(path);
-			if (imgpages[pagecounter - 1].images[counter-1]->error)
-				error = true;
-			counter++;
+
+		lastPath = path;
+
+		if (lastPath == "") {
+			for (; counter != 10; counter++)
+				imgpages[pagecounter - 1].addImage(lastPath);
 		}
 		else {
-			addPage(pagecounter + 1);
-			pagecounter++;
-			counter = 1;
-			imgpages[pagecounter - 1].addImage(path);
-			if (imgpages[pagecounter - 1].images[counter-1]->error)
-				error = true;
-			counter++;
+			if (counter < 10) {
+
+				imgpages[pagecounter - 1].addImage(path);
+
+				if (imgpages[pagecounter - 1].images[counter - 1]->error)
+					error = true;
+				counter++;
+			}
+			else {
+				addPage(pagecounter + 1);
+				pagecounter++;
+				counter = 1;
+				imgpages[pagecounter - 1].addImage(path);
+				if (imgpages[pagecounter - 1].images[counter - 1]->error)
+					error = true;
+				counter++;
+			}
+
 		}
+
 	}
+
 	return error;
 }
 
@@ -87,7 +116,7 @@ bool Menu::loadENCD(FileReader* FR)
 	for (std::string path : FR->ENCDpaths) {
 		if (counter < 10) {
 			encdpages[pagecounter - 1].addENCD(path);
-			if (encdpages[pagecounter - 1].encdfiles[counter-1]->error)
+			if (encdpages[pagecounter - 1].encdfiles[counter - 1]->error)
 				error = true;
 			counter++;
 		}
@@ -96,7 +125,7 @@ bool Menu::loadENCD(FileReader* FR)
 			pagecounter++;
 			counter = 1;
 			encdpages[pagecounter - 1].addENCD(path);
-			if (encdpages[pagecounter - 1].encdfiles[counter-1]->error)
+			if (encdpages[pagecounter - 1].encdfiles[counter - 1]->error)
 				error = true;
 			counter++;
 		}
@@ -199,12 +228,12 @@ void Menu::loopEncoder(ALLEGRO_EVENT_QUEUE * evq) {
 				case ALLEGRO_KEY_1:	if ((imPointer = imgpages[currentPage].getImage(1)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
 				case ALLEGRO_KEY_2:	if ((imPointer = imgpages[currentPage].getImage(2)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
 				case ALLEGRO_KEY_3:	if ((imPointer = imgpages[currentPage].getImage(3)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
-				case ALLEGRO_KEY_4:	if ((imPointer = imgpages[currentPage].getImage(4)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true;}	break;
-				case ALLEGRO_KEY_5:	if ((imPointer = imgpages[currentPage].getImage(5)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true;}	break;
-				case ALLEGRO_KEY_6:	if ((imPointer = imgpages[currentPage].getImage(6)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true;}	break;
-				case ALLEGRO_KEY_7:	if ((imPointer = imgpages[currentPage].getImage(7)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true;}	break;
-				case ALLEGRO_KEY_8:	if ((imPointer = imgpages[currentPage].getImage(8)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true;}	break;
-				case ALLEGRO_KEY_9:	if ((imPointer = imgpages[currentPage].getImage(9)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true;}	break;
+				case ALLEGRO_KEY_4:	if ((imPointer = imgpages[currentPage].getImage(4)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_5:	if ((imPointer = imgpages[currentPage].getImage(5)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_6:	if ((imPointer = imgpages[currentPage].getImage(6)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_7:	if ((imPointer = imgpages[currentPage].getImage(7)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_8:	if ((imPointer = imgpages[currentPage].getImage(8)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_9:	if ((imPointer = imgpages[currentPage].getImage(9)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
 
 
 
@@ -437,9 +466,19 @@ void Menu::checkError()
 {
 	if (getFilesystemError()) {
 		setError(menuError::BAD_FILEREADER);
+		this->reportError();
 	}
-	if (getParserError()) {
+	else if (getParserError()) {
 		setError(menuError::BAD_PARSER);
+		this->reportError();
+	}
+	else if (getImageError()) {
+		setError(menuError::BAD_IMAGE);
+		this->reportError();
+	}
+	else if (getParserError()) {
+		setError(menuError::BAD_ENCD);
+		this->reportError();
 	}
 }
 

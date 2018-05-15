@@ -126,61 +126,63 @@ void Drawer::drawButton(int x, int y, int sizex, int sizey, bool selected, std::
 
 void Drawer::drawMosaic(int pos, Image* img) {
 
-	switch (pos) {
-	case 1:
-		if (img->getSelectValue())
-			al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos1_w - 10, pos1_h - 10, photo_w + 20, photo_h + 20, NULL);
-		else
-			al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos1_w, pos1_h, photo_w, photo_h, NULL);
-		break;
-	case 2:
-		if (img->getSelectValue())
-			al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos2_w - 10, pos1_h - 10, photo_w + 20, photo_h + 20, NULL);
-		else
-			al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos2_w, pos1_h, photo_w, photo_h, NULL);
-		break;
-	case 3:
-		if (img->getSelectValue())
-			al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos3_w - 10, pos1_h - 10, photo_w + 20, photo_h + 20, NULL);
-		else
-			al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos3_w, pos1_h, photo_w, photo_h, NULL);
-		break;
-	case 4:
-		if (img->getSelectValue())
-			al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos4_w - 10, pos1_h - 10, photo_w + 20, photo_h + 20, NULL);
-		else
-			al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos4_w, pos1_h, photo_w, photo_h, NULL);
-		break;
-	case 5:
-		if (img->getSelectValue())
-			al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos5_w - 10, pos1_h - 10, photo_w + 20, photo_h + 20, NULL);
-		else
-			al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos5_w, pos1_h, photo_w, photo_h, NULL);
-		break;
-	case 6:
-		if (img->getSelectValue())
-			al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos6_w - 10, pos1_h - 10, photo_w + 20, photo_h + 20, NULL);
-		else
-			al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos6_w, pos1_h, photo_w, photo_h, NULL);
-		break;
-	case 7:
-		if (img->getSelectValue())
-			al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos7_w - 10, pos1_h - 10, photo_w + 20, photo_h + 20, NULL);
-		else
-			al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos7_w, pos1_h, photo_w, photo_h, NULL);
-		break;
-	case 8:
-		if (img->getSelectValue())
-			al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos8_w - 10, pos1_h - 10, photo_w + 20, photo_h + 20, NULL);
-		else
-			al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos8_w, pos1_h, photo_w, photo_h, NULL);
-		break;
-	case 9:
-		if (img->getSelectValue())
-			al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos9_w - 10, pos1_h - 10, photo_w + 20, photo_h + 20, NULL);
-		else
-			al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos9_w, pos1_h, photo_w, photo_h, NULL);
-		break;
+	if (img != NULL) {
+		switch (pos) {
+		case 1:
+			if (img->getSelectValue())
+				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos1_w - 10, pos1_h - 10, photo_w + 20, photo_h + 20, NULL);
+			else
+				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos1_w, pos1_h, photo_w, photo_h, NULL);
+			break;
+		case 2:
+			if (img->getSelectValue())
+				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos2_w - 10, pos1_h - 10, photo_w + 20, photo_h + 20, NULL);
+			else
+				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos2_w, pos1_h, photo_w, photo_h, NULL);
+			break;
+		case 3:
+			if (img->getSelectValue())
+				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos3_w - 10, pos1_h - 10, photo_w + 20, photo_h + 20, NULL);
+			else
+				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos3_w, pos1_h, photo_w, photo_h, NULL);
+			break;
+		case 4:
+			if (img->getSelectValue())
+				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos4_w - 10, pos1_h - 10, photo_w + 20, photo_h + 20, NULL);
+			else
+				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos4_w, pos1_h, photo_w, photo_h, NULL);
+			break;
+		case 5:
+			if (img->getSelectValue())
+				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos5_w - 10, pos1_h - 10, photo_w + 20, photo_h + 20, NULL);
+			else
+				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos5_w, pos1_h, photo_w, photo_h, NULL);
+			break;
+		case 6:
+			if (img->getSelectValue())
+				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos6_w - 10, pos1_h - 10, photo_w + 20, photo_h + 20, NULL);
+			else
+				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos6_w, pos1_h, photo_w, photo_h, NULL);
+			break;
+		case 7:
+			if (img->getSelectValue())
+				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos7_w - 10, pos1_h - 10, photo_w + 20, photo_h + 20, NULL);
+			else
+				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos7_w, pos1_h, photo_w, photo_h, NULL);
+			break;
+		case 8:
+			if (img->getSelectValue())
+				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos8_w - 10, pos1_h - 10, photo_w + 20, photo_h + 20, NULL);
+			else
+				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos8_w, pos1_h, photo_w, photo_h, NULL);
+			break;
+		case 9:
+			if (img->getSelectValue())
+				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos9_w - 10, pos1_h - 10, photo_w + 20, photo_h + 20, NULL);
+			else
+				al_draw_scaled_bitmap(img->bitmap, 0, 0, img->getWidth(), img->getHeight(), pos9_w, pos1_h, photo_w, photo_h, NULL);
+			break;
+		}
 	}
 
 

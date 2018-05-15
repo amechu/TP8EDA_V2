@@ -4,10 +4,10 @@ using namespace boost::filesystem;
 
 Image::Image(std::string path_)
 {
+	this->Path = path_;
 	setName(); //con el path, encuentra el nombre del archivo y lo carga a "name".
 	decodeImage(); //con el path, llena el vector pixels de pixeles y carga el ancho y alto de la imagen.
 	loadBitmap(); //con el path, carga el bitmap de allegro.
-	this->Path = path_;
 }
 
 Image::~Image()
@@ -16,7 +16,7 @@ Image::~Image()
 }
 
 void Image::setName()
-{	
+{
 	path p(Path.c_str());
 	if (exists(p))
 	{
@@ -26,7 +26,7 @@ void Image::setName()
 
 void Image::loadBitmap()
 {
-	this->bitmap = al_load_bitmap((this->Path).c_str());
+	this->bitmap = al_load_bitmap((this->name).c_str());
 }
 
 void Image::destroyBitmap()
@@ -42,7 +42,7 @@ void Image::decodeImage()
 		this->error = true;
 }
 
-void Image::toggleSelection(toggleVal select){ 
+void Image::toggleSelection(toggleVal select) {
 	switch (select) {
 	case toggleVal::TOGGLETRUE:
 		this->selected = true;
@@ -88,7 +88,7 @@ double Image::getTreshold(unsigned width, unsigned heigth, std::vector<unsigned 
 
 	for (int i = 0; i < (width*heigth); i++)	//con las iteraciones me fijo cual es el max y min de cada color
 	{
-		if (((*pointer) <= (MAXRED)) && ((*pointer) >(MAXGREEN)))	//rojo
+		if (((*pointer) <= (MAXRED)) && ((*pointer) > (MAXGREEN)))	//rojo
 		{
 			if ((*pointer) > maxred)
 			{

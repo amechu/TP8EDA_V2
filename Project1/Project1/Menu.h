@@ -17,6 +17,8 @@ public:
 	~Menu() {}
 
 	bool const getParserError();
+	bool const getImageError();
+	bool const getENCDError();
 	bool const getFilesystemError();
 	bool loadImages(FileReader* FR);
 	bool loadENCD(FileReader* FR);
@@ -64,6 +66,8 @@ private:
 
 	bool parserError;
 	bool filesystemError;
+	bool imageError;
+	bool ENCDerror;
 
 	bool shouldRedraw; //Variable utilizada para saber si debo, o no, llamar a update del drawer.
 };

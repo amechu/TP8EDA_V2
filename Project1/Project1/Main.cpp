@@ -17,8 +17,7 @@ int main(int argc, char*argv[]) {
 
 	mainMenu.checkError();												//Se fija que errores hubo y cambia el estado y variable de error acorde
 
-	if ((mainMenu.getError() != menuError::NO_ERROR)) {					//Si hubo algun error
-		mainMenu.reportError();											//lo reporto al usuario y cierro programa
+	if ((mainMenu.getError() != menuError::NO_ERROR)) {					//Si hubo algun error										//lo reporto al usuario y cierro programa
 		getchar();
 	}
 	else {

@@ -3,7 +3,12 @@
 void Page::addImage(std::string path_) {
 	if (totalimages < 9) {
 		Image* img = new Image(path_);
-		images[this->totalimages] = img;
+		if (path_ == "") {
+			images[this->totalimages] = NULL;
+		}
+		else {
+			images[this->totalimages] = img;
+		}
 		totalimages++;
 	}
 }

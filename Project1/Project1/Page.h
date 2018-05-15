@@ -19,7 +19,7 @@ public:
 
 	unsigned char getPageNumber() { return pageNumber; }
 
-	std::array<Image*, 9> images;
+	std::array<Image*, 9> images = { NULL };
 
 private:
 	unsigned char pageNumber;
