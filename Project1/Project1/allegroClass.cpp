@@ -115,7 +115,7 @@ void allegro_c::play_music(unsigned char i)
 	if(i == 0)
 		al_play_sample(this->music[0], 1.0, 0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 	else if(i == 1)
-		al_play_sample(this->music[1], 1.0, 0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+		al_play_sample(this->music[1], 3.0, 0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 }
 
 void allegro_c::start_timer() {
