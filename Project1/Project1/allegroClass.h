@@ -29,6 +29,7 @@ public:
 	void play_music(unsigned char i);
 	void updateDisplay();
 	void start_timer();
+	void flushEvs();
 	int fontSizeSmall = -15;
 	int fontSizeBig = -35;
 	ALLEGRO_FONT* smallfont;

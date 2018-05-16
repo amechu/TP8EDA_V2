@@ -121,3 +121,8 @@ void allegro_c::play_music(unsigned char i)
 void allegro_c::start_timer() {
 	al_start_timer(this->timer);
 }
+
+void allegro_c::flushEvs()
+{
+	al_flush_event_queue(this->ev_queue);
+}

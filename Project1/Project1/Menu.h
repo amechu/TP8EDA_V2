@@ -43,6 +43,7 @@ public:
 	void loopEncoder(ALLEGRO_EVENT_QUEUE * evq);
 	bool encode();
 	void save(std::string encoded, std::string filename);
+	void loadingScreen();
 	std::string quadtree(std::vector<unsigned char> pixels, unsigned side);
 	void loopDecoder(ALLEGRO_EVENT_QUEUE * evq);
 	bool decode();
