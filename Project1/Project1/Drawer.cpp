@@ -18,7 +18,7 @@ void Drawer::drawMenu() {
 }
 
 void Drawer::drawEncoder(std::vector<Page*>* pages) {
-
+	
 	bool atLeastOneImg = false;
 	bool foundPage = false;
 	unsigned counter = 1;
@@ -57,10 +57,11 @@ void Drawer::drawDecoder(std::vector<ENCDPage*>* pages) {
 
 
 	al_clear_to_color(al_map_rgb(170, 160, 57));
-	al_draw_text(altool->bigfont, al_map_rgb(196, 100, 2), SCREEN_W / 2, SCREEN_H / 9 - altool->fontSizeBig / 2, ALLEGRO_ALIGN_CENTER, "Which images do you want Gary to decode?");
+	al_draw_text(altool->bigfont, al_map_rgb(196, 100, 2), SCREEN_W / 2, 25, ALLEGRO_ALIGN_CENTER, "Which images do you want Gary to decode?");
 
 	for (ENCDPage* encdPage : *pages) {
 		if (encdPage->isSelected() && !foundPage) {
+			al_draw_text(altool->bigfont, al_color_name("orange"), SCREEN_W / 2, SCREEN_H - 50, NULL, (std::to_string(encdPage->getPageNumber())).c_str());
 			foundPage = true;
 			for (ENCD_FILE * encdfile : encdPage->encdfiles) {
 				if ((counter < 10) && (encdfile != NULL)){
@@ -72,16 +73,8 @@ void Drawer::drawDecoder(std::vector<ENCDPage*>* pages) {
 		}
 	}
 
-	//for (int i = 0; i < 10; i++) {
-	//	if (counter < 10) {
-	//		drawMosaic(counter, encdfile);
-	//		counter++;
-	//	}
-	//}
-
-
 	if (!atLeastOneImg) {
-		al_draw_text(altool->bigfont, al_map_rgb(196, 100, 2), SCREEN_W / 2, SCREEN_H / 2 - altool->fontSizeBig / 2, ALLEGRO_ALIGN_CENTER, "NO IMAGES FOUND. SAD!");
+		al_draw_text(altool->bigfont, al_map_rgb(196, 100, 2), SCREEN_W / 2, SCREEN_H / 2 - altool->fontSizeBig / 2, ALLEGRO_ALIGN_CENTER, "NO COMPRESSED IMAGES FOUND. SAD!");
 	}
 
 	al_flip_display();
@@ -120,7 +113,7 @@ void Drawer::drawButton(int x, int y, int sizex, int sizey, bool selected, std::
 	al_set_target_bitmap(bitmap);
 	al_clear_to_color(backcolor);
 	al_draw_rectangle(2, 2, sizex - 2, sizey - 2, linecolor, lineThickness);
-	al_draw_text(altool->bigfont, al_map_rgb(196, 100, 2), sizex / 2, sizey / 2 + altool->fontSizeBig + 15, ALLEGRO_ALIGN_CENTRE, msg.c_str());
+	al_draw_text(altool->smallfont, al_map_rgb(196, 100, 2), sizex / 2, sizey / 2 + altool->fontSizeSmall + 7, ALLEGRO_ALIGN_CENTRE, msg.c_str());
 	al_set_target_bitmap(disp);
 	al_draw_bitmap(bitmap, x - (sizex/2), y, NULL);
 }
@@ -190,7 +183,7 @@ void Drawer::drawMosaic(int pos, Image* img) {
 }
 
 void Drawer::drawMosaic(int pos, ENCD_FILE * img) {
-
+	
 	switch (pos) {
 	case 1:
 		drawButton(1 * SCREEN_W / 4, 2 * SCREEN_H / 9, SIZEX, SIZEY, img->getSelectValue(), img->getName());
@@ -202,55 +195,23 @@ void Drawer::drawMosaic(int pos, ENCD_FILE * img) {
 		drawButton(3 * SCREEN_W / 4, 2 * SCREEN_H / 9, SIZEX, SIZEY, img->getSelectValue(), img->getName());
 			break;
 	case 4:
-		drawButton(1 * SCREEN_W / 4, 5 * SCREEN_H / 9, SIZEX, SIZEY, img->getSelectValue(), img->getName());
+		drawButton(1 * SCREEN_W / 4, 4 * SCREEN_H / 9, SIZEX, SIZEY, img->getSelectValue(), img->getName());
 			break;
 	case 5:
-		drawButton(2 * SCREEN_W / 4, 5 * SCREEN_H / 9, SIZEX, SIZEY, img->getSelectValue(), img->getName());
+		drawButton(2 * SCREEN_W / 4, 4 * SCREEN_H / 9, SIZEX, SIZEY, img->getSelectValue(), img->getName());
 			break;
 	case 6:
-		drawButton(3 * SCREEN_W / 4, 5 * SCREEN_H / 9, SIZEX, SIZEY, img->getSelectValue(), img->getName());
+		drawButton(3 * SCREEN_W / 4, 4 * SCREEN_H / 9, SIZEX, SIZEY, img->getSelectValue(), img->getName());
 			break;
 	case 7:
-		drawButton(1 * SCREEN_W / 4, 7 * SCREEN_H / 9, SIZEX, SIZEY, img->getSelectValue(), img->getName());
+		drawButton(1 * SCREEN_W / 4, 6 * SCREEN_H / 9, SIZEX, SIZEY, img->getSelectValue(), img->getName());
 			break;
 	case 8:
-		drawButton(2 * SCREEN_W / 4, 7 * SCREEN_H / 9, SIZEX, SIZEY, img->getSelectValue(), img->getName());
+		drawButton(2 * SCREEN_W / 4, 6 * SCREEN_H / 9, SIZEX, SIZEY, img->getSelectValue(), img->getName());
 			break;
 	case 9:
-		drawButton(3 * SCREEN_W / 4, 7 * SCREEN_H / 9, SIZEX, SIZEY, img->getSelectValue(), img->getName());
+		drawButton(3 * SCREEN_W / 4, 6 * SCREEN_H / 9, SIZEX, SIZEY, img->getSelectValue(), img->getName());
 			break;
 	}
-
-	//switch (pos) {
-	//case 1:
-	//	drawButton(1 * SCREEN_W / 4, 2 * SCREEN_H / 9, SIZEX, SIZEY, true, "TEST");
-	//	break;
-	//case 2:
-	//	drawButton(2 * SCREEN_W / 4, 2 * SCREEN_H / 9, SIZEX, SIZEY, true, "TEST");
-	//	break;
-	//case 3:
-	//	drawButton(3 * SCREEN_W / 4, 2 * SCREEN_H / 9, SIZEX, SIZEY, true, "TEST");
-	//	break;
-	//case 4:
-	//	drawButton(1 * SCREEN_W / 4, 4 * SCREEN_H / 9, SIZEX, SIZEY, true, "TEST");
-	//	break;
-	//case 5:
-	//	drawButton(2 * SCREEN_W / 4, 4 * SCREEN_H / 9, SIZEX, SIZEY, true, "TEST");
-	//	break;
-	//case 6:
-	//	drawButton(3 * SCREEN_W / 4, 4 * SCREEN_H / 9, SIZEX, SIZEY, false, "TEST");
-	//	break;
-	//case 7:
-	//	drawButton(1 * SCREEN_W / 4, 6* SCREEN_H / 9, SIZEX, SIZEY, false, "TEST");
-	//	break;
-	//case 8:
-	//	drawButton(2 * SCREEN_W / 4, 6 * SCREEN_H / 9, SIZEX, SIZEY, false, "TEST");
-	//	break;
-	//case 9:
-	//	drawButton(3 * SCREEN_W / 4, 6 * SCREEN_H / 9, SIZEX, SIZEY, false, "TEST");
-	//	break;
-	//}
-
-
 }
 

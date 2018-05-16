@@ -2,8 +2,15 @@
 
 void ENCDPage::addENCD(std::string path_)
 {
-	if (encdfiles.size() <= encdfiles.max_size() - 1) {
-		encdfiles[encdfiles.size()] = new ENCD_FILE(path_);
+	if (totalencd < 9) {
+		ENCD_FILE* encdfile = new ENCD_FILE(path_);
+		if (path_ == "") {
+			encdfiles[totalencd] = NULL;
+		}
+		else {
+			encdfiles[totalencd] = encdfile;
+		}
+		totalencd++;
 	}
 }
 

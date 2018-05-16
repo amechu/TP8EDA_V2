@@ -28,6 +28,7 @@ public:
 	int Read(int argc, char *argv[]);
 
 	std::string getPath() { return path; }
+	unsigned getThreshold() { return threshold; }
 
 private:
 	void Do(char *key, char *value);

@@ -16,6 +16,7 @@ public:
 	Image * getImage(int i);
 
 	bool const isSelected();
+	void setSelected(bool set) { selected = set; }
 
 	unsigned char getPageNumber() { return pageNumber; }
 

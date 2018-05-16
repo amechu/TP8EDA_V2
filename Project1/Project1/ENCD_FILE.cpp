@@ -4,6 +4,8 @@ using namespace boost::filesystem;
 
 ENCD_FILE::ENCD_FILE(std::string path_)
 {
+	this->Path = path_;
+	setName();
 	setText();
 }
 
@@ -49,7 +51,7 @@ void ENCD_FILE::setName()
 
 void ENCD_FILE::setText()
 {
-	//magia de ari
+	
 }
 
 

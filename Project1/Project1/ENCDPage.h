@@ -8,13 +8,14 @@ class ENCDPage
 {
 public:
 public:
-	ENCDPage(unsigned char pageNumber_) : pageNumber(pageNumber_) {}
+	ENCDPage(unsigned char pageNumber_) : pageNumber(pageNumber_) { if (pageNumber_ == 1) selected = true; }
 	~ENCDPage() {}
 
 	void addENCD(std::string path_);
 	ENCD_FILE * getENCD(int i);
 
 	bool const isSelected();
+	void setSelected(bool set) { selected = set; }
 
 	unsigned char getPageNumber() { return pageNumber; }
 
@@ -22,6 +23,7 @@ public:
 
 private:
 	unsigned char pageNumber;
-	bool selected;
+	bool selected = false;
+	unsigned totalencd = 0;
 };
 

@@ -32,6 +32,7 @@ public:
 	void setENCDError(bool error);
 	void setState(menuState state_);
 	void setError(menuError error_);
+	void getThreshold(unsigned threshold_) { threshold = threshold_; }
 	void loadAllegroClass(allegro_c * alClass_);
 
 	void checkError();
@@ -39,6 +40,7 @@ public:
 	void loopMenu(ALLEGRO_EVENT_QUEUE * evq);
 	void loopEncoder(ALLEGRO_EVENT_QUEUE * evq);
 	bool encode();
+	std::string quadtree(std::vector<unsigned char> pixels, unsigned side);
 	void loopDecoder(ALLEGRO_EVENT_QUEUE * evq);
 	bool decode();
 
@@ -54,7 +56,8 @@ public:
 private:
 	std::vector<Page*> imgpages;
 	std::vector<ENCDPage*> encdpages;
-	unsigned char currentPage;
+	unsigned char currentPage = 1;
+	unsigned threshold;
 
 	allegro_c * alClass;
 

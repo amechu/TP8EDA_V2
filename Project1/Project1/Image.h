@@ -26,13 +26,11 @@ public:
 	unsigned getWidth();
 	unsigned getHeight();
 	bool error = false; //Si hubo error con la imagen
-
-
+	std::vector<unsigned char> pixels; //Vector de pixeles de la imagen
 	double getTreshold(unsigned width, unsigned heigth, std::vector<unsigned char>&rawpixels);	//funcion cancer que hay que arreglar
 
 private:
 	
-	std::vector<unsigned char> pixels; //Vector de pixeles de la imagen
 	
 	std::string Path; //Filepath al archivo, con mayusculas pq sino hace conflicto con el clase path
 	

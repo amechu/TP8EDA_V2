@@ -20,9 +20,10 @@ int main(int argc, char*argv[]) {
 		mainMenu.setFilesystemError(fileReader.load(parser.getPath()));		//algun error a lo largo del
 		mainMenu.setImageError(mainMenu.loadImages(&fileReader));						//seteo inicial del programa
 		mainMenu.setENCDError(mainMenu.loadENCD(&fileReader));							//y si lo hay, lo carga
+		mainMenu.getThreshold(parser.getThreshold());
 		mainMenu.loadAllegroClass(&allClass);
 
-		mainMenu.checkError();												//Se fija que errores hubo y cambia el estado y variable de error acorde
+		mainMenu.checkError();									//Se fija que errores hubo y cambia el estado y variable de error acorde
 
 		if ((mainMenu.getError() == menuError::NO_ERROR)) {
 

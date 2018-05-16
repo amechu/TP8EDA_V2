@@ -12,7 +12,7 @@ public:
 	void toggleSelection(toggleVal select);
 	bool getSelectValue();
 	std::string getName();
-	bool error; //Si hubo error con el archivo
+	bool error = false; //Si hubo error con el archivo
 
 private:
 	std::string text; //Texto dentro del archivo
@@ -21,7 +21,7 @@ private:
 
 	std::string name; //nombre del archivo
 	
-	bool selected; //Si esta seleccionada
+	bool selected = false; //Si esta seleccionada
 	
 	void setName(); //A partir del path, busco el nombre del archivo y lo pongo en name
 	

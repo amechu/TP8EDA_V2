@@ -16,7 +16,7 @@ Image::~Image()
 }
 
 void Image::setName()
-{	
+{
 	path p(Path);
 
 	if (exists(p))
@@ -27,7 +27,6 @@ void Image::setName()
 
 void Image::loadBitmap()
 {
-	this->bitmap = al_create_bitmap((this->width), (this->height));
 	this->bitmap = al_load_bitmap(((this->Path).c_str()));
 }
 
@@ -38,10 +37,27 @@ void Image::destroyBitmap()
 
 void Image::decodeImage()
 {
+	unsigned auxwidth, auxheight, side;
+
 	unsigned err = lodepng::decode(this->pixels, this->width, this->height, this->Path);
 
 	if (err)
 		this->error = true;
+	else {
+		auxwidth = pow(2, ceil(log(width) / log(2))); //Me da el numero mas cercano potencia de 2 para arriba
+		auxheight = pow(2, ceil(log(height) / log(2)));
+		if (auxwidth >= auxheight) {
+			side = auxwidth;
+		}
+		else {
+			side = auxheight;
+		}
+		for (int i = 0; i < (pow(side, 2) - (width*height)); i++) {
+			for (int j = 0; j < 4; j++) //Meto 4 FF por pixel (blancos)
+			pixels.push_back(0xFF);
+		}
+		width = height = side;
+	}
 }
 
 void Image::toggleSelection(toggleVal select) {
