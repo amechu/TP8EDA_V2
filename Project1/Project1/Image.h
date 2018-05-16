@@ -28,8 +28,7 @@ public:
 	std::string getName();
 	bool error = false; //Si hubo error con la imagen
 	std::vector<unsigned char> pixels; //Vector de pixeles de la imagen
-	double getTreshold(unsigned width, unsigned heigth, std::vector<unsigned char>&rawpixels);	//funcion cancer que hay que arreglar
-
+	
 private:
 	
 	
