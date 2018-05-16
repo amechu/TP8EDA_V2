@@ -532,8 +532,8 @@ bool Menu::decode()
 	std::string decoded;
 
 	for (ENCDPage* page : encdpages) { //Este loop busca las imagenes seleccionadas y las mete en el vector para luego trabajarlas.
-		for (ENCD_FILE * img : page->encdfiles) {
-			if (img != nullptr && img->getSelectValue())
+		for (ENCD_FILE * encd : page->encdfiles) {
+			if (encd != nullptr && encd->getSelectValue())
 				toDecode.push_back(encd);
 		}
 	}
@@ -551,9 +551,18 @@ bool Menu::decode()
 		codedfile >> buffer;
 		length = (atoi(buffer.c_str()));	//obtengo el largo de la imagen cuadrada
 		codedfile.get();	//esto para sacarme el end of line y seguir a la linea que sigue
-//		char * rawpixels;//tirar el new aca 
+		unsigned char * rawpixels= new unsigned char[(4*length*length)]; 
 		//meter funcion que hace la inversa del quad tree
+		this->encdDecoder(codedfile, length, rawpixels, 0, 0, length);
 
+		std::string tempName = encd->getName();
+
+		for (int i = 0; i < 5; i++)
+			tempName.pop_back(); //Así elimino la extensión
+
+		tempName += "new.png";
+			
+		lodepng_encode32_file(tempName.c_str(), rawpixels, length, length);
 
 		toDecode.pop_back();
 
@@ -565,8 +574,8 @@ bool Menu::decode()
 void Menu::encdDecoder(std::ifstream&  encdfile, int length, unsigned char * rawpixels, int x, int y, int size)
 {
 	char reader[1];	//este va a ser el que se fije en las 'N' o en las 'B'
-	char colores[3];	//este es el que va a ir tomando los colores
-
+	char  colores[4];	//este es el que va a ir tomando los colores
+	char * pcolores = &colores[0];
 	encdfile.read(reader, 1);
 	if (reader[0] == 'N')
 	{
@@ -574,7 +583,7 @@ void Menu::encdDecoder(std::ifstream&  encdfile, int length, unsigned char * raw
 		colores[3] = 0xFF;	//seteo el byte que corresponde a la trasparencia
 		encdfile.read(colores, 3);
 		//funcion que colorea
-
+		this->colorear(encdfile, length, rawpixels, (unsigned char *)pcolores, x, y, size);
 	}
 	else if (reader[0] == 'B')	//brancheo en las cuatro ramas de izq a derecha de arriba a abajo
 	{
@@ -586,7 +595,7 @@ void Menu::encdDecoder(std::ifstream&  encdfile, int length, unsigned char * raw
 	}
 }
 
-void Menu::colorear(std::ifstream & encdfile, int length, unsigned char * rawpixels, unsigned char colores[4], int x, int y, int size)
+void Menu::colorear(std::ifstream & encdfile, int length, unsigned char * rawpixels, unsigned char * colores, int x, int y, int size)
 {
 	unsigned int base = (((y ? y : 1) - 1) * 4 * size) + (((x ? x : 1) - 1) * 4);
 	for (int i = 0; i < length; i++)
