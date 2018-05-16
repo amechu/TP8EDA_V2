@@ -54,6 +54,8 @@ int main(int argc, char*argv[]) {
 				}
 			}
 		}
+		else
+			getchar();
 	}
 	return EXIT_SUCCESS;												//Salgo del programa
 }

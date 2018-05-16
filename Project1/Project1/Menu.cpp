@@ -2,7 +2,10 @@
 #include <iostream>
 #include "allegroClass.h"
 
+
 const int MAXTHRESHOLD = 765;
+
+#define FILEEXT ".encd"
 
 menuState const Menu::getState()
 {
@@ -327,12 +330,14 @@ bool Menu::encode()
 
 	while (!toEncode.empty()) {
 
+		std::string filename;
 		img = toEncode.back();
+		filename = (toEncode.back())->getName();
 		toEncode.pop_back();
 
 		encoded += quadtree(img->pixels, img->getWidth());
 
-		//save(encoded);
+		save(encoded, filename);
 	}
 	return false;
 }
@@ -361,6 +366,7 @@ std::string Menu::quadtree(std::vector<unsigned char> pixels, unsigned side)
 		if (pixels[i + 2] < mb)
 			mb = pixels[i + 2];
 	}
+
 	puntaje = Mr - mr + Mg - mg + Mb - mb;
 
 	if (puntaje < this->threshold) {
@@ -520,6 +526,29 @@ void Menu::loopDecoder(ALLEGRO_EVENT_QUEUE * evq)
 
 bool Menu::decode()
 {
+	std::vector<ENCD_FILE*> toDecode; //Vector de imagenes a decodear
+	ENCD_FILE* encd;
+	std::string decoded;
+
+	for (ENCDPage* page : encdpages) { //Este loop busca las imagenes seleccionadas y las mete en el vector para luego trabajarlas.
+		for (ENCD_FILE * img : page->encdfiles) {
+			if (img != nullptr && img->getSelectValue())
+				toDecode.push_back(encd);
+		}
+	}
+
+	while (!toDecode.empty()) {
+
+		encd = toDecode.back();
+		std::string filename = (toDecode.back())->getName();
+		
+		std::ifstream codedfile;
+		codedfile.open(filename);
+
+		toDecode.pop_back();
+
+	}
+
 	return false;
 }
 
@@ -596,4 +625,14 @@ void Menu::checkError()
 void Menu::loadAllegroClass(allegro_c * alClass_) {
 	this->alClass = alClass_;
 	this->drawer.getDrawTool(alClass_);
+}
+
+void Menu::save(std::string encoded, std::string filename) {
+
+	for (int i = 0; i < 4; i++)
+		filename.pop_back(); //Borro la extensión .png del nombre de los archivos.
+
+	std::ofstream file(filename + FILEEXT);
+	file << encoded;
+	file.close();
 }

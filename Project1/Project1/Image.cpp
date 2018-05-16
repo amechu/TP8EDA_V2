@@ -144,3 +144,7 @@ double Image::getTreshold(unsigned width, unsigned heigth, std::vector<unsigned 
 
 	return (maxred - minred + maxblue - minblue + maxgreen - mingreen);
 }
+
+std::string Image::getName() { 
+	return this->name; 
+}
