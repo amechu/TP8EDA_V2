@@ -547,12 +547,13 @@ bool Menu::decode()
 
 		unsigned int length;
 		string buffer;
-
+		
 		codedfile >> buffer;
 		length = (atoi(buffer.c_str()));	//obtengo el largo de la imagen cuadrada
 		codedfile.get();	//esto para sacarme el end of line y seguir a la linea que sigue
-		unsigned char * rawpixels= new unsigned char[(4*length*length)]; 
+		//unsigned char * rawpixels= new unsigned char[(4*length*length)]; 
 		//meter funcion que hace la inversa del quad tree
+		unsigned char * rawpixels = (unsigned char *)malloc(4 * length * length);
 		this->encdDecoder(codedfile, length, rawpixels, 0, 0, length);
 
 		std::string tempName = encd->getName();
@@ -564,6 +565,7 @@ bool Menu::decode()
 			
 		lodepng_encode32_file(tempName.c_str(), rawpixels, length, length);
 
+		free(rawpixels);
 		toDecode.pop_back();
 
 	}
