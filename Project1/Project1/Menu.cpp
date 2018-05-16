@@ -571,6 +571,34 @@ void Menu::encdDecoder(std::ifstream&  encdfile, int length, unsigned char * raw
 	if (reader[0] == 'N')
 	{
 		char colores[4];
+		colores[3] = 0xFF;	//seteo el byte que corresponde a la trasparencia
+		encdfile.read(colores, 3);
+		//funcion que colorea
+
+	}
+	else if (reader[0] == 'B')	//brancheo en las cuatro ramas de izq a derecha de arriba a abajo
+	{
+		encdDecoder(encdfile, length/2, rawpixels, x, y, size);
+		encdDecoder(encdfile, length / 2, rawpixels, x + (length / 2), y, size);
+		encdDecoder(encdfile, length / 2, rawpixels, x, y + (length + 2), size);
+		encdDecoder(encdfile, length / 2, rawpixels, x + (length / 2), y + (length / 2),size);
+
+	}
+}
+
+void Menu::colorear(std::ifstream & encdfile, int length, unsigned char * rawpixels, unsigned char colores[4], int x, int y, int size)
+{
+	unsigned int base = (((y ? y : 1) - 1) * 4 * size) + (((x ? x : 1) - 1) * 4);
+	for (int i = 0; i < length; i++)
+	{
+		for (int j = 0; j < length; j++) 
+		{
+			unsigned int pixel = base + (4 * i * size) + (4 * j);
+			for (int a = 0; a < 3; a++)
+			{ 
+				rawpixels[pixel + a] = colores[a];
+			}
+		}
 	}
 }
 
