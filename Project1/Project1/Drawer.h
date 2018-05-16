@@ -17,6 +17,7 @@ public:
 	void drawError();
 	void drawSuccess();
 	void getDrawTool(allegro_c* altool_) { this->altool = altool_; }
+	void loadingScreen();
 
 private:
 

@@ -215,3 +215,9 @@ void Drawer::drawMosaic(int pos, ENCD_FILE * img) {
 	}
 }
 
+void Drawer::loadingScreen() {
+
+	al_clear_to_color(al_map_rgb(0, 0, 0));
+	al_draw_text(altool->bigfont, al_map_rgb(255, 255, 255), SCREEN_W / 2, SCREEN_H / 2, ALLEGRO_ALIGN_CENTER, "LOADING...PLEASE WAIT.");
+	al_flip_display();
+}

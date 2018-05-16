@@ -534,7 +534,7 @@ bool Menu::decode()
 	for (ENCDPage* page : encdpages) { //Este loop busca las imagenes seleccionadas y las mete en el vector para luego trabajarlas.
 		for (ENCD_FILE * img : page->encdfiles) {
 			if (img != nullptr && img->getSelectValue())
-				toDecode.push_back(encd);
+				toDecode.push_back(img);
 		}
 	}
 
@@ -553,7 +553,6 @@ bool Menu::decode()
 		codedfile.get();	//esto para sacarme el end of line y seguir a la linea que sigue
 //		char * rawpixels;//tirar el new aca 
 		//meter funcion que hace la inversa del quad tree
-
 
 		toDecode.pop_back();
 
@@ -685,4 +684,8 @@ void Menu::save(std::string encoded, std::string filename) {
 	std::ofstream file(filename + FILEEXT);
 	file << encoded;
 	file.close();
+}
+
+void Menu::loadingScreen() {
+	this->drawer.loadingScreen();
 }
