@@ -7,6 +7,8 @@ class allegro_c;
 #include "FileReader.h"
 #include "ENCDPage.h"
 #include <vector>
+#include <iostream>
+#include <fstream>
 
 enum class menuError { BAD_PARSER, BAD_FILEREADER, BAD_IMAGE, BAD_ENCD , NO_ERROR};
 
@@ -44,6 +46,8 @@ public:
 	std::string quadtree(std::vector<unsigned char> pixels, unsigned side);
 	void loopDecoder(ALLEGRO_EVENT_QUEUE * evq);
 	bool decode();
+
+	void encdDecoder(std::ifstream&  encdfile,int length,unsigned char * rawpixels, int x, int y, int size );
 
 	void drawSuccess() { drawer.drawSuccess(); }
 	void drawError() { drawer.drawError(); }

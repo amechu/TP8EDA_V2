@@ -336,7 +336,8 @@ bool Menu::encode()
 		toEncode.pop_back();
 
 		encoded += quadtree(img->pixels, img->getWidth());
-
+		string aux = (to_string(img->getWidth())+"\n");
+		encoded.insert(0, aux);	//esto hago para meterle el tamaño de la imagen cuadrada al .encd
 		save(encoded, filename);
 	}
 	return false;
@@ -542,14 +543,35 @@ bool Menu::decode()
 		encd = toDecode.back();
 		std::string filename = (toDecode.back())->getName();
 		
-		std::ifstream codedfile;
-		codedfile.open(filename);
+		std::ifstream codedfile(filename, std::ofstream::binary);	//abro el archivo .encd
+
+		unsigned int length;
+		string buffer;
+
+		codedfile >> buffer;
+		length = (atoi(buffer.c_str()));	//obtengo el largo de la imagen cuadrada
+		codedfile.get();	//esto para sacarme el end of line y seguir a la linea que sigue
+//		char * rawpixels;//tirar el new aca 
+		//meter funcion que hace la inversa del quad tree
+
 
 		toDecode.pop_back();
 
 	}
 
 	return false;
+}
+
+void Menu::encdDecoder(std::ifstream&  encdfile, int length, unsigned char * rawpixels, int x, int y, int size)
+{
+	char reader[1];	//este va a ser el que se fije en las 'N' o en las 'B'
+	char colores[3];	//este es el que va a ir tomando los colores
+
+	encdfile.read(reader, 1);
+	if (reader[0] == 'N')
+	{
+		char colores[4];
+	}
 }
 
 void Menu::switchPage(ALLEGRO_EVENT ev)

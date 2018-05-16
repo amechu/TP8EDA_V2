@@ -58,6 +58,7 @@ void Image::decodeImage()
 		}
 		width = height = side;
 	}
+	
 }
 
 void Image::toggleSelection(toggleVal select) {
@@ -90,60 +91,6 @@ unsigned Image::getHeight()
 	return height;
 }
 
-double Image::getTreshold(unsigned width, unsigned heigth, std::vector<unsigned char>&rawpixels)
-{
-	uint32_t * pointer;
-	pointer = (uint32_t*)(&(rawpixels[0]));
-
-	uint32_t maxred = MAXGREEN;
-	uint32_t minred = MAXRED;	//PONGO EL MAXIMO COLOR POSIBLE EN EL MINIMO PARA QUE SE VAYA RENOVANDO
-
-	uint32_t maxgreen = MAXBLUE;
-	uint32_t mingreen = MAXGREEN;
-
-	uint32_t maxblue = 0;
-	uint32_t minblue = MAXBLUE;
-
-	for (int i = 0; i < (width*heigth); i++)	//con las iteraciones me fijo cual es el max y min de cada color
-	{
-		if (((*pointer) <= (MAXRED)) && ((*pointer) > (MAXGREEN)))	//rojo
-		{
-			if ((*pointer) > maxred)
-			{
-				maxred = (*pointer);	//pongo el contenido del puntero en maximo rojo
-			}
-			else if ((*pointer) < minred)
-			{
-				minred = (*pointer);
-			}
-		}
-		else if (((*pointer) <= (MAXGREEN)) && ((*pointer) > (MAXBLUE))) //verde
-		{
-			if ((*pointer) > maxgreen)
-			{
-				maxgreen = (*pointer);
-			}
-			else if ((*pointer) < mingreen)
-			{
-				mingreen = (*pointer);
-			}
-		}
-		else if (((*pointer) <= (MAXBLUE)) && ((*pointer) >= 0)) //azul
-		{
-			if ((*pointer) > maxblue)
-			{
-				maxblue = (*pointer);
-			}
-			else if ((*pointer) < minblue)
-			{
-				minblue = (*pointer);
-			}
-		}
-		pointer++;	//cambiar todo pq es un cancer algo asi es la idea pero mejor hacerla que se mueva char a char
-	}
-
-	return (maxred - minred + maxblue - minblue + maxgreen - mingreen);
-}
 
 std::string Image::getName() { 
 	return this->name; 
