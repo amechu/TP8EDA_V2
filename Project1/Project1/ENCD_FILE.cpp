@@ -45,7 +45,7 @@ void ENCD_FILE::setName()
 	path p(Path.c_str());
 	if (exists(p))	//me fijo si existe el path capaz se podria sacar
 	{
-		name = (p.string()); //esto devuelve el path donde se encuentra el archivo y el nombre de este
+		name = (p.filename().string()); //esto devuelve el path donde se encuentra el archivo y el nombre de este
 	}
 }
 

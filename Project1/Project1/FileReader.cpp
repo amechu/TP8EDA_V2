@@ -40,7 +40,7 @@ bool FileReader::load(string dir)
 							
 							pngpaths.push_back((itr->path().string()));	//subo el path al vector
 						}
-						else if (!strcmp(check.c_str(), "ENCD"))
+						else if (!strcmp(check.c_str(), "encd"))
 						{
 							ENCDpaths.push_back((itr->path().string()));
 							

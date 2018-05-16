@@ -18,8 +18,8 @@ int main(int argc, char*argv[]) {
 
 		mainMenu.setParserError(parser.Read(argc, argv));					//Se fija si hubo
 		mainMenu.setFilesystemError(fileReader.load(parser.getPath()));		//algun error a lo largo del
-		mainMenu.setImageError(mainMenu.loadImages(&fileReader));						//seteo inicial del programa
-		mainMenu.setENCDError(mainMenu.loadENCD(&fileReader));							//y si lo hay, lo carga
+		//mainMenu.setImageError(mainMenu.loadImages(& fileReader));						//seteo inicial del programa
+		//mainMenu.setENCDError(mainMenu.loadENCD(&fileReader));							//y si lo hay, lo carga
 		mainMenu.getThreshold(parser.getThreshold());
 		mainMenu.loadAllegroClass(&allClass);
 
@@ -32,6 +32,8 @@ int main(int argc, char*argv[]) {
 			mainMenu.loopMenu(allClass.getEventQueue());					//o decomprimir. Siempre haciendo un notify() por cada cambio.
 
 			if (mainMenu.getState() == menuState::ENCODER) {
+
+				mainMenu.setImageError(mainMenu.loadImages(&fileReader));						//seteo inicial del programa
 				mainMenu.loopEncoder(allClass.getEventQueue());				//Si quizo comprimir, entro en menu de comprimir
 				if (mainMenu.encode()) {									//Comprimo
 					mainMenu.setState(menuState::SUCCESS);				//Si fue exitoso
@@ -43,6 +45,7 @@ int main(int argc, char*argv[]) {
 				}
 			}
 			else if (mainMenu.getState() == menuState::DECODER) {			//Si quizo decomprimir, entro en menu de decomprimir
+				mainMenu.setENCDError(mainMenu.loadENCD(&fileReader));							//y si lo hay, lo carga
 				mainMenu.loopDecoder(allClass.getEventQueue());
 				if (mainMenu.decode()) {									//Descomprimo
 					mainMenu.setState(menuState::SUCCESS);				//Si fue exitoso
@@ -56,6 +59,7 @@ int main(int argc, char*argv[]) {
 		}
 		else
 			getchar();
+
 	}
 	return EXIT_SUCCESS;												//Salgo del programa
 }
