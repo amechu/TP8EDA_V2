@@ -58,7 +58,7 @@ void Image::prepareImage()
 	}
 	for (int i = 0; i < (pow(side, 2) - (width*height)); i++) {
 		for (int j = 0; j < 4; j++) //Meto 4 FF por pixel (blancos)
-			pixels.push_back(0xFF);
+			pixels.push_back(0x0);
 	}
 	width = height = side;
 }

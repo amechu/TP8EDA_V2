@@ -64,6 +64,8 @@ bool Menu::loadImages(FileReader* FR)
 	bool error = false;
 	bool atLeastOnePNG = false;
 
+	this->loadingScreenPRE();
+
 	if (this->imgpages.size() == 0) {
 		addPage(pagecounter + 1);
 		pagecounter++;
@@ -348,7 +350,7 @@ bool Menu::encode()
 		encoded.insert(0, aux);	//esto hago para meterle el tamaño de la imagen cuadrada al .encd
 		save(encoded, filename);
 	}
-	return false;
+	return true;
 }
 
 std::string Menu::quadtree(std::vector<unsigned char> pixels, unsigned side)
@@ -357,10 +359,7 @@ std::string Menu::quadtree(std::vector<unsigned char> pixels, unsigned side)
 	std::string returnVal;
 	unsigned puntaje = 0, Mr = 0, mr = 255, Mg = 0, mg = 255, Mb = 0, mb = 255;
 	unsigned char promedio = 0;
-
-	//Si llegue aca, es porque branchie.
 	
-
 	for (int i = 0; i < pixels.size(); i = i + 4) { //Calculo maximos y minimos
 		if (pixels[i] > Mr)
 			Mr = pixels[i];
@@ -378,7 +377,7 @@ std::string Menu::quadtree(std::vector<unsigned char> pixels, unsigned side)
 
 	puntaje = Mr - mr + Mg - mg + Mb - mb;
 
-	if (puntaje < this->threshold) {
+	if (puntaje < this->threshold || side == 1) {
 		//No tengo que branchear mas
 		returnVal += 'N';
 		//Calculo promedio
@@ -400,20 +399,24 @@ std::string Menu::quadtree(std::vector<unsigned char> pixels, unsigned side)
 
 	else {
 		//Tengo que partir imagen en 4 sub-cuadrados.
-		returnVal += 'B';
-
 		for (int y1 = 0; y1 < side / 2; y1++) { //Primera mitad en altura
 			for (int x1 = 0; x1 < side / 2; x1++) { //Primera mitad en anchura
-				firstquarter.push_back(pixels[x1 + (y1*(side / 2))]); //Capturo linea horizontal de largo side/2 y al llegar al final se sumo una linea de largo side/2 (los de la segunda mitad en anchura)
-				secondquarter.push_back(pixels[((side / 2)*y1) + x1]); //Misma idea, pero primero sumo side/2
+				for (int pixelpart = 0; pixelpart < 4; pixelpart++) {
+					firstquarter.push_back(pixels[(x1 * 4) + (y1*(side) * 4) + pixelpart]); //Capturo linea horizontal de largo side/2 y al llegar al final se sumo una linea de largo side/2 (los de la segunda mitad en anchura)
+					secondquarter.push_back(pixels[((side / 2) * 4 + (side)*y1 * 4) + (x1 * 4) + pixelpart]); //Misma idea, pero primero sumo side/2
+				}
 			}
 		}
 		for (int y2 = side / 2; y2 < side; y2++) { //Segunda mitad en altura
 			for (int x1 = 0; x1 < side / 2; x1++) { //Primera mitad en anchura
-				thirdquarter.push_back(pixels[x1 + (y2*(side / 2))]); //Misma idea pero sumo la mitad de la imagen primero
-				fourthquarter.push_back(pixels[((side / 2) + y2) + x1]);
+				for (int pixelpart = 0; pixelpart < 4; pixelpart++) {
+					thirdquarter.push_back(pixels[(x1 * 4) + (y2*(side) * 4) + pixelpart]); //Misma idea pero sumo la mitad de la imagen primero
+					fourthquarter.push_back(pixels[(side / 2) * 4 + ((side)* y2 * 4) + (x1 * 4) + pixelpart]);
+				}
 			}
 		}
+
+		returnVal += 'B';
 
 		returnVal += quadtree(firstquarter, side / 2); //Llamadas recursivas con un largo de lado mitad que el anterior.
 		returnVal += quadtree(secondquarter, side / 2);
@@ -540,6 +543,7 @@ bool Menu::decode()
 	std::vector<ENCD_FILE*> toDecode; //Vector de imagenes a decodear
 	ENCD_FILE* encd;
 	std::string decoded;
+	unsigned int error;
 
 	for (ENCDPage* page : encdpages) { //Este loop busca las imagenes seleccionadas y las mete en el vector para luego trabajarlas.
 		for (ENCD_FILE * encd : page->encdfiles) {
@@ -552,6 +556,8 @@ bool Menu::decode()
 
 		encd = toDecode.back();
 		std::string filename = (toDecode.back())->getName();
+
+		this->loadingScreenDecoding(filename);
 
 		std::ifstream codedfile;
 		codedfile.open(this->dirPath + "\\" + filename, std::ifstream::in);	//abro el archivo .encd
@@ -580,15 +586,13 @@ bool Menu::decode()
 		tempName += "DECODED.png";
 
 
-		unsigned int error = lodepng::encode(tempName, rawpixelsPNG, length, length);
-		if (!error)
-			lodepng::save_file(rawpixelsPNG, tempName);
+		error = lodepng::encode(tempName, rawpixelsPNG, length, length);
 
 		toDecode.pop_back();
 		codedfile.close();
 	}
 
-	return false;
+	return (error == 0);
 }
 
 void Menu::encdDecoder(std::ifstream&  encdfile, int length, vector<unsigned char>& rawpixels, int x, int y, int size)

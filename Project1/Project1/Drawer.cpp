@@ -80,9 +80,41 @@ void Drawer::drawDecoder(std::vector<ENCDPage*>* pages) {
 	al_flip_display();
 }
 
-void Drawer::drawError() {}
+void Drawer::drawError() {
+	al_clear_to_color(al_map_rgb(0, 0, 0));
+	al_draw_text(altool->bigfont, al_map_rgb(255, 255, 255), SCREEN_W / 2, SCREEN_H / 2, ALLEGRO_ALIGN_CENTER, "ERROR! SAD.");
+	al_draw_text(altool->bigfont, al_color_name("orange"), SCREEN_W / 2, SCREEN_H / 2 + 150, ALLEGRO_ALIGN_CENTER, "Quiting in 3..");
+	al_flip_display();
+	al_rest(1);
+	al_clear_to_color(al_map_rgb(0, 0, 0));
+	al_draw_text(altool->bigfont, al_map_rgb(255, 255, 255), SCREEN_W / 2, SCREEN_H / 2, ALLEGRO_ALIGN_CENTER, "ERROR! SAD.");
+	al_draw_text(altool->bigfont, al_color_name("orange"), SCREEN_W / 2, SCREEN_H / 2 + 150, ALLEGRO_ALIGN_CENTER, "Quiting in 2..");
+	al_flip_display();
+	al_rest(1);
+	al_clear_to_color(al_map_rgb(0, 0, 0));
+	al_draw_text(altool->bigfont, al_map_rgb(255, 255, 255), SCREEN_W / 2, SCREEN_H / 2, ALLEGRO_ALIGN_CENTER, "ERROR! SAD.");
+	al_draw_text(altool->bigfont, al_color_name("orange"), SCREEN_W / 2, SCREEN_H / 2 + 150, ALLEGRO_ALIGN_CENTER, "Quiting in 1..");
+	al_flip_display();
+	al_rest(1);
+}
 
-void Drawer::drawSuccess() {}
+void Drawer::drawSuccess() {
+	al_clear_to_color(al_map_rgb(0, 0, 0));
+	al_draw_text(altool->bigfont, al_map_rgb(255, 255, 255), SCREEN_W / 2, SCREEN_H / 2, ALLEGRO_ALIGN_CENTER, "SUCCESS!");
+	al_draw_text(altool->bigfont, al_color_name("orange"), SCREEN_W / 2, SCREEN_H / 2 + 150, ALLEGRO_ALIGN_CENTER, "Quiting in 3..");
+	al_flip_display();
+	al_rest(1);
+	al_clear_to_color(al_map_rgb(0, 0, 0));
+	al_draw_text(altool->bigfont, al_map_rgb(255, 255, 255), SCREEN_W / 2, SCREEN_H / 2, ALLEGRO_ALIGN_CENTER, "SUCCESS!");
+	al_draw_text(altool->bigfont, al_color_name("orange"), SCREEN_W / 2, SCREEN_H / 2 + 150, ALLEGRO_ALIGN_CENTER, "Quiting in 2..");
+	al_flip_display();
+	al_rest(1);
+	al_clear_to_color(al_map_rgb(0, 0, 0));
+	al_draw_text(altool->bigfont, al_map_rgb(255, 255, 255), SCREEN_W / 2, SCREEN_H / 2, ALLEGRO_ALIGN_CENTER, "SUCCESS!");
+	al_draw_text(altool->bigfont, al_color_name("orange"), SCREEN_W / 2, SCREEN_H / 2 + 150, ALLEGRO_ALIGN_CENTER, "Quiting in 1..");
+	al_flip_display();
+	al_rest(1);
+}
 
 void Drawer::drawButton(int x, int y, std::string msg) {
 
@@ -227,5 +259,21 @@ void Drawer::loadingScreenEncoding(std::string img)
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 	al_draw_text(altool->bigfont, al_map_rgb(255, 255, 255), SCREEN_W / 2, SCREEN_H / 2, ALLEGRO_ALIGN_CENTER, "LOADING.. PLEASE WAIT.");
 	al_draw_text(altool->bigfont, al_color_name("orange"), SCREEN_W / 2, SCREEN_H / 2 + 150, ALLEGRO_ALIGN_CENTER, ("Compressing image: " + img).c_str());
+	al_flip_display();
+}
+
+void Drawer::loadingScreenDecoding(std::string file)
+{
+	al_clear_to_color(al_map_rgb(0, 0, 0));
+	al_draw_text(altool->bigfont, al_map_rgb(255, 255, 255), SCREEN_W / 2, SCREEN_H / 2, ALLEGRO_ALIGN_CENTER, "LOADING.. PLEASE WAIT.");
+	al_draw_text(altool->bigfont, al_color_name("orange"), SCREEN_W / 2, SCREEN_H / 2 + 150, ALLEGRO_ALIGN_CENTER, ("Decompressing file: " + file).c_str());
+	al_flip_display();
+}
+
+void Drawer::loadingScreenPRE()
+{
+	al_clear_to_color(al_map_rgb(0, 0, 0));
+	al_draw_text(altool->bigfont, al_map_rgb(255, 255, 255), SCREEN_W / 2, SCREEN_H / 2, ALLEGRO_ALIGN_CENTER, "LOADING.. PLEASE WAIT.");
+	al_draw_text(altool->bigfont, al_color_name("orange"), SCREEN_W / 2, SCREEN_H / 2 + 150, ALLEGRO_ALIGN_CENTER, "Preparing images..");
 	al_flip_display();
 }

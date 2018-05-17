@@ -19,6 +19,8 @@ public:
 	void getDrawTool(allegro_c* altool_) { this->altool = altool_; }
 	void loadingScreen();
 	void loadingScreenEncoding(std::string img);
+	void loadingScreenDecoding(std::string file);
+	void loadingScreenPRE();
 
 private:
 

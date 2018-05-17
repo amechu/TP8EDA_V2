@@ -32,7 +32,6 @@ int main(int argc, char*argv[]) {
 			mainMenu.loadingScreen();
 
 			if (mainMenu.getState() == menuState::ENCODER) {
-
 				mainMenu.setImageError(mainMenu.loadImages(&fileReader));
 
 				if (mainMenu.getError() == menuError::NO_ERROR) {
