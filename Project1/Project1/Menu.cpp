@@ -599,6 +599,8 @@ void Menu::encdDecoder(std::ifstream&  encdfile, int length, vector<unsigned cha
 {
 	char reader[1];	//este va a ser el que se fije en las 'N' o en las 'B'
 	char  colores[4];	//este es el que va a ir tomando los colores
+	static int tuvieja2 = 0;
+	
 	encdfile.read(reader, 1);
 
 	//std::cout << encdfile.peek();
@@ -608,6 +610,7 @@ void Menu::encdDecoder(std::ifstream&  encdfile, int length, vector<unsigned cha
 		colores[3] = 0xFF;	//seteo el byte que corresponde a la trasparencia
 		encdfile.read(colores, 3);
 		//funcion que colorea
+		tuvieja2++;
 		this->colorear(encdfile, length, rawpixels, (unsigned char *)colores, x, y, size);
 	}
 	else if (reader[0] == 'B')	//brancheo en las cuatro ramas de izq a derecha de arriba a abajo
@@ -616,6 +619,15 @@ void Menu::encdDecoder(std::ifstream&  encdfile, int length, vector<unsigned cha
 		encdDecoder(encdfile, length / 2, rawpixels, x + (length / 2), y, size);
 		encdDecoder(encdfile, length / 2, rawpixels, x, y + (length / 2), size);
 		encdDecoder(encdfile, length / 2, rawpixels, x + (length / 2), y + (length / 2), size);
+	}
+	else
+	{
+		uint8_t tuvieja = reader[0];
+	
+		cout <<"tiro esto"<< tuvieja << "   en"<< x << "y="<< y<< endl;
+		encdfile.read(reader, 1);
+		cout << "tiro esto" << tuvieja << "   en" << x << "y=" << y << endl;
+		encdfile.read(reader, 1);
 	}
 }
 
