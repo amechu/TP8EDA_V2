@@ -49,8 +49,9 @@ public:
 	void save(std::string encoded, std::string filename);
 	void loadingScreen() { this->drawer.loadingScreen();  }
 	void loadingScreenEncoding(std::string img) { this->drawer.loadingScreenEncoding(img); }
-	void loadingScreenDecoding(std::string file) { this->drawer.loadingScreenEncoding(file); }
+	void loadingScreenDecoding(std::string file) { this->drawer.loadingScreenDecoding(file); }
 	void loadingScreenPRE() { this->drawer.loadingScreenPRE(); }
+	void drawQUIT() { this->drawer.drawQUIT(); }
 	std::string quadtree(std::vector<unsigned char> pixels, unsigned side);
 	void loopDecoder(ALLEGRO_EVENT_QUEUE * evq);
 	bool decode();

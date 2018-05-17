@@ -29,22 +29,27 @@ int main(int argc, char*argv[]) {
 
 			mainMenu.setState(menuState::MAINMENU);							//Sino, comienzo mainmenu, espero que el usuario diga si quiere comprimir
 			mainMenu.loopMenu(allClass.getEventQueue());					//o decomprimir. Siempre haciendo un notify() por cada cambio.
-			mainMenu.loadingScreen();
 
 			if (mainMenu.getState() == menuState::ENCODER) {
+				mainMenu.loadingScreen();
 				mainMenu.setImageError(mainMenu.loadImages(&fileReader));
 
 				if (mainMenu.getError() == menuError::NO_ERROR) {
 					allClass.flushEvs();
 					mainMenu.loopEncoder(allClass.getEventQueue());				//Si quizo comprimir, entro en menu de comprimir
 
-					if (mainMenu.encode()) {									//Comprimo
-						mainMenu.setState(menuState::SUCCESS);				//Si fue exitoso
-						mainMenu.drawSuccess();										//Notifico exito
+					if (mainMenu.getState() == menuState::QUIT) {
+						mainMenu.drawQUIT();
 					}
 					else {
-						mainMenu.setState(menuState::ERROR);					//Si hubo error
-						mainMenu.drawError();										//Notifico error
+						if (mainMenu.encode()) {									//Comprimo
+							mainMenu.setState(menuState::SUCCESS);				//Si fue exitoso
+							mainMenu.drawSuccess();										//Notifico exito
+						}
+						else {
+							mainMenu.setState(menuState::ERROR);					//Si hubo error
+							mainMenu.drawError();										//Notifico error
+						}
 					}
 				}
 				else {
@@ -54,18 +59,25 @@ int main(int argc, char*argv[]) {
 			}
 
 			else if (mainMenu.getState() == menuState::DECODER) {			//Si quizo decomprimir, entro en menu de decomprimir
+				mainMenu.loadingScreen();
 				mainMenu.setENCDError(mainMenu.loadENCD(&fileReader));
 
 				if (mainMenu.getError() == menuError::NO_ERROR) {
 
 					mainMenu.loopDecoder(allClass.getEventQueue());
-					if (mainMenu.decode()) {									//Descomprimo
-						mainMenu.setState(menuState::SUCCESS);				//Si fue exitoso
-						mainMenu.drawSuccess();										//Notifico exito
+
+					if (mainMenu.getState() == menuState::QUIT) {
+						mainMenu.drawQUIT();
 					}
 					else {
-						mainMenu.setState(menuState::ERROR);					//Si hubo error
-						mainMenu.drawError();										//Notifico error
+						if (mainMenu.decode()) {									//Descomprimo
+							mainMenu.setState(menuState::SUCCESS);				//Si fue exitoso
+							mainMenu.drawSuccess();										//Notifico exito
+						}
+						else {
+							mainMenu.setState(menuState::ERROR);					//Si hubo error
+							mainMenu.drawError();										//Notifico error
+						}
 					}
 				}
 				else {

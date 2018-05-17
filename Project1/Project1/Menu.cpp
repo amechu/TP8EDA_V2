@@ -568,9 +568,6 @@ bool Menu::decode()
 		codedfile >> buffer;
 		length = (atoi(buffer.c_str()));	//obtengo el largo de la imagen cuadrada
 		codedfile.get();	//esto para sacarme el end of line y seguir a la linea que sigue
-		//unsigned char * rawpixels= new unsigned char[(4*length*length)]; 
-		//meter funcion que hace la inversa del quad tree
-		/*unsigned char * rawpixels = (unsigned char *)malloc(4 * length * length);*/
 
 		vector<unsigned char> rawpixelsPNG;
 
@@ -599,18 +596,20 @@ void Menu::encdDecoder(std::ifstream&  encdfile, int length, vector<unsigned cha
 {
 	char reader[1];	//este va a ser el que se fije en las 'N' o en las 'B'
 	char  colores[4];	//este es el que va a ir tomando los colores
-	static int tuvieja2 = 0;
 	
 	encdfile.read(reader, 1);
 
-	//std::cout << encdfile.peek();
+	/*No logramos resolver el programa que hace que el decoder no funcione con ciertas imagenes
+	este problema es que a veces el color que se lee es un EOF, lo que hace que por alguna razon, no sabemos cual,
+	todos los caracteres siguientes que se toman sean -52, que suponemos que es el char no inizializado, pero no pudimos
+	hacer que no pase eso. Si la imagen esta compuesta por colores bien contorneados no sucede, a menos que justo un promedio
+	sea igual en alguna componente de color a un EOF.*/
 
 	if (reader[0] == 'N')
 	{
 		colores[3] = 0xFF;	//seteo el byte que corresponde a la trasparencia
 		encdfile.read(colores, 3);
 		//funcion que colorea
-		tuvieja2++;
 		this->colorear(encdfile, length, rawpixels, (unsigned char *)colores, x, y, size);
 	}
 	else if (reader[0] == 'B')	//brancheo en las cuatro ramas de izq a derecha de arriba a abajo
@@ -620,23 +619,14 @@ void Menu::encdDecoder(std::ifstream&  encdfile, int length, vector<unsigned cha
 		encdDecoder(encdfile, length / 2, rawpixels, x, y + (length / 2), size);
 		encdDecoder(encdfile, length / 2, rawpixels, x + (length / 2), y + (length / 2), size);
 	}
-	else
-	{
-		uint8_t tuvieja = reader[0];
-	
-		cout <<"tiro esto"<< tuvieja << "   en"<< x << "y="<< y<< endl;
-		encdfile.read(reader, 1);
-		cout << "tiro esto" << tuvieja << "   en" << x << "y=" << y << endl;
-		encdfile.read(reader, 1);
-	}
 }
 
 void Menu::colorear(std::ifstream & encdfile, int length, vector<unsigned char>& rawpixels, unsigned char * colores, int x, int y, int size)
 {
 	/*
-		static unsigned int QUEMIERDATEPASA = 0;
-		QUEMIERDATEPASA++;
-		std::cout << QUEMIERDATEPASA << std::endl;
+		static unsigned int QUETEPASA = 0;
+		QUETEPASA++;
+		std::cout << QUETEPASA << std::endl;
 	//*//*
 	//	unsigned int base = (((y ? y : 1) - 1) * 4 * size) + (((x ? x : 1) - 1) * 4);
 	//	for (int i = 0; i < length; i++)

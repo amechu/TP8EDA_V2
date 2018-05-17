@@ -277,3 +277,19 @@ void Drawer::loadingScreenPRE()
 	al_draw_text(altool->bigfont, al_color_name("orange"), SCREEN_W / 2, SCREEN_H / 2 + 150, ALLEGRO_ALIGN_CENTER, "Preparing images..");
 	al_flip_display();
 }
+
+void Drawer::drawQUIT()
+{
+	al_clear_to_color(al_map_rgb(0, 0, 0));
+	al_draw_text(altool->bigfont, al_color_name("orange"), SCREEN_W / 2, SCREEN_H / 2 + 150, ALLEGRO_ALIGN_CENTER, "Quiting in 3..");
+	al_flip_display();
+	al_rest(1);
+	al_clear_to_color(al_map_rgb(0, 0, 0));
+	al_draw_text(altool->bigfont, al_color_name("orange"), SCREEN_W / 2, SCREEN_H / 2 + 150, ALLEGRO_ALIGN_CENTER, "Quiting in 2..");
+	al_flip_display();
+	al_rest(1);
+	al_clear_to_color(al_map_rgb(0, 0, 0));
+	al_draw_text(altool->bigfont, al_color_name("orange"), SCREEN_W / 2, SCREEN_H / 2 + 150, ALLEGRO_ALIGN_CENTER, "Quiting in 1..");
+	al_flip_display();
+	al_rest(1);
+}

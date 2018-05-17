@@ -21,6 +21,7 @@ public:
 	void loadingScreenEncoding(std::string img);
 	void loadingScreenDecoding(std::string file);
 	void loadingScreenPRE();
+	void drawQUIT();
 
 private:
 
