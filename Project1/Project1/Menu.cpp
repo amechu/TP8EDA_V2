@@ -118,8 +118,8 @@ bool Menu::loadENCD(FileReader* FR)
 
 	for (std::string path : FR->ENCDpaths) {
 		if (counter < 10) {
-			encdpages[pagecounter -1]->addENCD(path);
-			if (encdpages[pagecounter -1]->encdfiles[counter - 1]->error)
+			encdpages[pagecounter - 1]->addENCD(path);
+			if (encdpages[pagecounter - 1]->encdfiles[counter - 1]->error)
 				error = true;
 			counter++;
 		}
@@ -127,8 +127,8 @@ bool Menu::loadENCD(FileReader* FR)
 			addPageENCD(pagecounter + 1);
 			pagecounter++;
 			counter = 1;
-			encdpages[pagecounter -1]->addENCD(path);
-			if (encdpages[pagecounter -1]->encdfiles[counter - 1]->error)
+			encdpages[pagecounter - 1]->addENCD(path);
+			if (encdpages[pagecounter - 1]->encdfiles[counter - 1]->error)
 				error = true;
 			counter++;
 		}
@@ -217,7 +217,7 @@ void Menu::loopEncoder(ALLEGRO_EVENT_QUEUE * evq) {
 		Image * imPointer = NULL;
 
 		if (this->imgpages.size() > 0) //Si hay almenos una página, hago que imPointer apunte a esa página. Si no la hay, permanece en NULL. IMPORTANTE PARA LOS FOR.
-			imPointer = imgpages[currentPage-1]->getImage(1);
+			imPointer = imgpages[currentPage - 1]->getImage(1);
 
 		bool canSwitchModes = false;
 
@@ -228,15 +228,15 @@ void Menu::loopEncoder(ALLEGRO_EVENT_QUEUE * evq) {
 			case ALLEGRO_EVENT_KEY_DOWN:
 				switch (alEv.keyboard.keycode) {
 
-				case ALLEGRO_KEY_1:	if ((imPointer = imgpages[currentPage-1]->getImage(1)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
-				case ALLEGRO_KEY_2:	if ((imPointer = imgpages[currentPage-1]->getImage(2)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
-				case ALLEGRO_KEY_3:	if ((imPointer = imgpages[currentPage-1]->getImage(3)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
-				case ALLEGRO_KEY_4:	if ((imPointer = imgpages[currentPage-1]->getImage(4)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
-				case ALLEGRO_KEY_5:	if ((imPointer = imgpages[currentPage-1]->getImage(5)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
-				case ALLEGRO_KEY_6:	if ((imPointer = imgpages[currentPage-1]->getImage(6)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
-				case ALLEGRO_KEY_7:	if ((imPointer = imgpages[currentPage-1]->getImage(7)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
-				case ALLEGRO_KEY_8:	if ((imPointer = imgpages[currentPage-1]->getImage(8)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
-				case ALLEGRO_KEY_9:	if ((imPointer = imgpages[currentPage-1]->getImage(9)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_1:	if ((imPointer = imgpages[currentPage - 1]->getImage(1)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_2:	if ((imPointer = imgpages[currentPage - 1]->getImage(2)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_3:	if ((imPointer = imgpages[currentPage - 1]->getImage(3)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_4:	if ((imPointer = imgpages[currentPage - 1]->getImage(4)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_5:	if ((imPointer = imgpages[currentPage - 1]->getImage(5)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_6:	if ((imPointer = imgpages[currentPage - 1]->getImage(6)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_7:	if ((imPointer = imgpages[currentPage - 1]->getImage(7)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_8:	if ((imPointer = imgpages[currentPage - 1]->getImage(8)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
+				case ALLEGRO_KEY_9:	if ((imPointer = imgpages[currentPage - 1]->getImage(9)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
 
 
 				case ALLEGRO_KEY_ESCAPE:
@@ -245,7 +245,7 @@ void Menu::loopEncoder(ALLEGRO_EVENT_QUEUE * evq) {
 				case ALLEGRO_KEY_ENTER: //Si toco ENTER, procedo a encodear lo que esté seleccionado. Si no hay nada seleccionado, informo a través de un efecto de sonido.
 					for (Page* page : this->imgpages)
 						for (int i = 0; (imPointer != NULL) && (i < 9) && canSwitchModes == false; i++) { //Si aun no llegué a un puntero a NULL (Que implica que los siguientes también lo son) y aun no encontré almenos una imagen seleccionada
-							if ((imPointer = page->getImage(i+1)) != NULL) { //...Sigo loopeando hasta encontrar una seleccionada o llegar al final de la lista.
+							if ((imPointer = page->getImage(i + 1)) != NULL) { //...Sigo loopeando hasta encontrar una seleccionada o llegar al final de la lista.
 								canSwitchModes = (*imPointer).getSelectValue();
 							}
 						}
@@ -263,7 +263,7 @@ void Menu::loopEncoder(ALLEGRO_EVENT_QUEUE * evq) {
 
 					for (Page* page : this->imgpages)
 						for (int i = 0; (imPointer != NULL) && (i < 9); i++) {
-							if ((imPointer = page->getImage(i+1)) != NULL) {
+							if ((imPointer = page->getImage(i + 1)) != NULL) {
 								(*imPointer).toggleSelection(toggleVal::TOGGLETRUE);
 							}
 						}
@@ -275,7 +275,7 @@ void Menu::loopEncoder(ALLEGRO_EVENT_QUEUE * evq) {
 
 					for (Page* page : this->imgpages)
 						for (int i = 0; (imPointer != NULL) && (i < 9); i++) {
-							if ((imPointer = page->getImage(i+1)) != NULL) {
+							if ((imPointer = page->getImage(i + 1)) != NULL) {
 								(*imPointer).toggleSelection(toggleVal::TOGGLEFALSE);
 							}
 						}
@@ -284,17 +284,17 @@ void Menu::loopEncoder(ALLEGRO_EVENT_QUEUE * evq) {
 
 				case ALLEGRO_KEY_LEFT:
 					if (this->currentPage > 1) {
-						this->imgpages[currentPage-1]->setSelected(false);
+						this->imgpages[currentPage - 1]->setSelected(false);
 						currentPage--;
-						this->imgpages[currentPage-1]->setSelected(true);
+						this->imgpages[currentPage - 1]->setSelected(true);
 						shouldRedraw = true;
 					}
 					break;
 				case ALLEGRO_KEY_RIGHT:
 					if (this->currentPage < this->imgpages.size()) {
-						this->imgpages[currentPage-1]->setSelected(false);
+						this->imgpages[currentPage - 1]->setSelected(false);
 						currentPage++;
-						this->imgpages[currentPage-1]->setSelected(true);
+						this->imgpages[currentPage - 1]->setSelected(true);
 						shouldRedraw = true;
 					}
 					break;
@@ -334,6 +334,8 @@ bool Menu::encode()
 
 	while (!toEncode.empty()) {
 
+		encoded = ""; //Limpio el string cada vez
+
 		std::string filename;
 		img = toEncode.back();
 		filename = (toEncode.back())->getName();
@@ -342,7 +344,7 @@ bool Menu::encode()
 		this->loadingScreenEncoding(img->getName());
 
 		encoded += quadtree(img->pixels, img->getWidth());
-		string aux = (to_string(img->getWidth())+"\n");
+		string aux = (to_string(img->getWidth()) + "\n");
 		encoded.insert(0, aux);	//esto hago para meterle el tamaño de la imagen cuadrada al .encd
 		save(encoded, filename);
 	}
@@ -354,12 +356,12 @@ std::string Menu::quadtree(std::vector<unsigned char> pixels, unsigned side)
 	std::vector<unsigned char> firstquarter, secondquarter, thirdquarter, fourthquarter;
 	std::string returnVal;
 	unsigned puntaje = 0, Mr = 0, mr = 255, Mg = 0, mg = 255, Mb = 0, mb = 255;
-	unsigned char promedio=0;
+	unsigned char promedio = 0;
 
 	//Si llegue aca, es porque branchie.
-	returnVal += 'B';
+	
 
-	for (int i = 0; i < pixels.size(); i = i+4) { //Calculo maximos y minimos
+	for (int i = 0; i < pixels.size(); i = i + 4) { //Calculo maximos y minimos
 		if (pixels[i] > Mr)
 			Mr = pixels[i];
 		if (pixels[i] < mr)
@@ -381,7 +383,7 @@ std::string Menu::quadtree(std::vector<unsigned char> pixels, unsigned side)
 		returnVal += 'N';
 		//Calculo promedio
 		Mr = Mg = Mb = 0;
-		for (int j = 0; j < side / 4; j++) {
+		for (int j = 0; j < side; j += 4) {
 			Mr += pixels[j];
 			Mg += pixels[j + 1];
 			Mb += pixels[j + 2];
@@ -398,13 +400,15 @@ std::string Menu::quadtree(std::vector<unsigned char> pixels, unsigned side)
 
 	else {
 		//Tengo que partir imagen en 4 sub-cuadrados.
+		returnVal += 'B';
+
 		for (int y1 = 0; y1 < side / 2; y1++) { //Primera mitad en altura
 			for (int x1 = 0; x1 < side / 2; x1++) { //Primera mitad en anchura
 				firstquarter.push_back(pixels[x1 + (y1*(side / 2))]); //Capturo linea horizontal de largo side/2 y al llegar al final se sumo una linea de largo side/2 (los de la segunda mitad en anchura)
 				secondquarter.push_back(pixels[((side / 2)*y1) + x1]); //Misma idea, pero primero sumo side/2
 			}
 		}
-		for (int y2 = side/2; y2 < side; y2++) { //Segunda mitad en altura
+		for (int y2 = side / 2; y2 < side; y2++) { //Segunda mitad en altura
 			for (int x1 = 0; x1 < side / 2; x1++) { //Primera mitad en anchura
 				thirdquarter.push_back(pixels[x1 + (y2*(side / 2))]); //Misma idea pero sumo la mitad de la imagen primero
 				fourthquarter.push_back(pixels[((side / 2) + y2) + x1]);
@@ -431,7 +435,7 @@ void Menu::loopDecoder(ALLEGRO_EVENT_QUEUE * evq)
 		ENCD_FILE * imPointer = NULL;
 
 		if (this->encdpages.size() > 0) //Si hay almenos una página, hago que imPointer apunte a esa página. Si no la hay, permanece en NULL. IMPORTANTE PARA LOS FOR.
-			imPointer = encdpages[currentPage-1]->getENCD(1);
+			imPointer = encdpages[currentPage - 1]->getENCD(1);
 
 		bool canSwitchModes = false; //Booleano que me indica si puedo 
 
@@ -442,7 +446,7 @@ void Menu::loopDecoder(ALLEGRO_EVENT_QUEUE * evq)
 			case ALLEGRO_EVENT_KEY_DOWN:
 				switch (alEv.keyboard.keycode) {
 
-				case ALLEGRO_KEY_1:	if ((imPointer = encdpages[currentPage-1]->getENCD(1)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break; //Si toco un número, debo cambiar el valor de selección
+				case ALLEGRO_KEY_1:	if ((imPointer = encdpages[currentPage - 1]->getENCD(1)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break; //Si toco un número, debo cambiar el valor de selección
 				case ALLEGRO_KEY_2:	if ((imPointer = encdpages[currentPage - 1]->getENCD(2)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break; //de la imagen en pantalla a la cual corresponde ese número.
 				case ALLEGRO_KEY_3:	if ((imPointer = encdpages[currentPage - 1]->getENCD(3)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
 				case ALLEGRO_KEY_4:	if ((imPointer = encdpages[currentPage - 1]->getENCD(4)) != NULL) { (*imPointer).toggleSelection(toggleVal::TOGGLE); this->shouldRedraw = true; }	break;
@@ -459,7 +463,7 @@ void Menu::loopDecoder(ALLEGRO_EVENT_QUEUE * evq)
 				case ALLEGRO_KEY_ENTER: //Si toco ENTER, procedo a decodear lo que esté seleccionado. Si no hay nada seleccionado, informo a través de un efecto de sonido.
 					for (ENCDPage* page : this->encdpages)
 						for (int i = 0; (imPointer != NULL) && (i < 9) && canSwitchModes == false; i++) { //Si no llegué a un NULL pointer (o sea que aún podría haber imagenes seleccionadas) y aún no encontré una seleccionada....
-							if ((imPointer = page->getENCD(i+1)) != NULL) { //...Sigo buscando hasta encontrar una seleccionada.
+							if ((imPointer = page->getENCD(i + 1)) != NULL) { //...Sigo buscando hasta encontrar una seleccionada.
 								canSwitchModes = (*imPointer).getSelectValue();
 							}
 						}
@@ -478,7 +482,7 @@ void Menu::loopDecoder(ALLEGRO_EVENT_QUEUE * evq)
 
 					for (ENCDPage* page : this->encdpages)
 						for (int i = 0; (imPointer != NULL) && (i < 9); i++) {
-							if ((imPointer = page->getENCD(i+1)) != NULL) {
+							if ((imPointer = page->getENCD(i + 1)) != NULL) {
 								(*imPointer).toggleSelection(toggleVal::TOGGLETRUE);
 							}
 						}
@@ -490,7 +494,7 @@ void Menu::loopDecoder(ALLEGRO_EVENT_QUEUE * evq)
 
 					for (ENCDPage* page : this->encdpages)
 						for (int i = 0; (imPointer != NULL) && (i < 9); i++) {
-							if ((imPointer = page->getENCD(i+1)) != NULL) {
+							if ((imPointer = page->getENCD(i + 1)) != NULL) {
 								(*imPointer).toggleSelection(toggleVal::TOGGLEFALSE);
 							}
 						}
@@ -548,19 +552,25 @@ bool Menu::decode()
 
 		encd = toDecode.back();
 		std::string filename = (toDecode.back())->getName();
-		
-		std::ifstream codedfile(filename, std::ofstream::binary);	//abro el archivo .encd
+
+		std::ifstream codedfile;
+		codedfile.open(this->dirPath + "\\" + filename, std::ifstream::in);	//abro el archivo .encd
 
 		unsigned int length;
-		string buffer;
-		
+		string buffer = "";
+
 		codedfile >> buffer;
 		length = (atoi(buffer.c_str()));	//obtengo el largo de la imagen cuadrada
 		codedfile.get();	//esto para sacarme el end of line y seguir a la linea que sigue
 		//unsigned char * rawpixels= new unsigned char[(4*length*length)]; 
 		//meter funcion que hace la inversa del quad tree
-		unsigned char * rawpixels = (unsigned char *)malloc(4 * length * length);
-		this->encdDecoder(codedfile, length, rawpixels, 0, 0, length);
+		/*unsigned char * rawpixels = (unsigned char *)malloc(4 * length * length);*/
+
+		vector<unsigned char> rawpixelsPNG;
+
+		rawpixelsPNG.resize(length * length * 4); //Cantidad de bytes totales.
+
+		this->encdDecoder(codedfile, length, rawpixelsPNG, 0, 0, length);
 
 		std::string tempName = this->dirPath + "\\" + encd->getName();
 
@@ -568,55 +578,79 @@ bool Menu::decode()
 			tempName.pop_back(); //Así elimino la extensión
 
 		tempName += "DECODED.png";
-			
-		lodepng_encode32_file(tempName.c_str(), rawpixels, length, length);
 
-		free(rawpixels);
+
+		unsigned int error = lodepng::encode(tempName, rawpixelsPNG, length, length);
+		if (!error)
+			lodepng::save_file(rawpixelsPNG, tempName);
+
 		toDecode.pop_back();
-
+		codedfile.close();
 	}
 
 	return false;
 }
 
-void Menu::encdDecoder(std::ifstream&  encdfile, int length, unsigned char * rawpixels, int x, int y, int size)
+void Menu::encdDecoder(std::ifstream&  encdfile, int length, vector<unsigned char>& rawpixels, int x, int y, int size)
 {
 	char reader[1];	//este va a ser el que se fije en las 'N' o en las 'B'
 	char  colores[4];	//este es el que va a ir tomando los colores
-	char * pcolores = &colores[0];
 	encdfile.read(reader, 1);
+
+	//std::cout << encdfile.peek();
+
 	if (reader[0] == 'N')
 	{
-		char colores[4];
 		colores[3] = 0xFF;	//seteo el byte que corresponde a la trasparencia
 		encdfile.read(colores, 3);
 		//funcion que colorea
-		this->colorear(encdfile, length, rawpixels, (unsigned char *)pcolores, x, y, size);
+		this->colorear(encdfile, length, rawpixels, (unsigned char *)colores, x, y, size);
 	}
 	else if (reader[0] == 'B')	//brancheo en las cuatro ramas de izq a derecha de arriba a abajo
 	{
-		encdDecoder(encdfile, length/2, rawpixels, x, y, size);
+		encdDecoder(encdfile, length / 2, rawpixels, x, y, size);
 		encdDecoder(encdfile, length / 2, rawpixels, x + (length / 2), y, size);
-		encdDecoder(encdfile, length / 2, rawpixels, x, y + (length + 2), size);
-		encdDecoder(encdfile, length / 2, rawpixels, x + (length / 2), y + (length / 2),size);
-
+		encdDecoder(encdfile, length / 2, rawpixels, x, y + (length / 2), size);
+		encdDecoder(encdfile, length / 2, rawpixels, x + (length / 2), y + (length / 2), size);
 	}
 }
 
-void Menu::colorear(std::ifstream & encdfile, int length, unsigned char * rawpixels, unsigned char * colores, int x, int y, int size)
+void Menu::colorear(std::ifstream & encdfile, int length, vector<unsigned char>& rawpixels, unsigned char * colores, int x, int y, int size)
 {
-	unsigned int base = (((y ? y : 1) - 1) * 4 * size) + (((x ? x : 1) - 1) * 4);
-	for (int i = 0; i < length; i++)
+	/*
+		static unsigned int QUEMIERDATEPASA = 0;
+		QUEMIERDATEPASA++;
+		std::cout << QUEMIERDATEPASA << std::endl;
+	//*//*
+	//	unsigned int base = (((y ? y : 1) - 1) * 4 * size) + (((x ? x : 1) - 1) * 4);
+	//	for (int i = 0; i < length; i++)
+	//	{
+	//		for (int j = 0; j < length; j++)
+	//		{
+	//			unsigned int pixel = base + (4 * i * size) + (4 * j);
+	//			for (unsigned int a = 0; a <= 3; a++)
+	//			{
+	//				rawpixels[pixel + a] = colores[a];
+	//			}
+	//		}
+	//	}*/
+
+	unsigned int base = (x * 4) + (y * 4 * size); //Me paro en la posición correspondiente de la matriz.
+
+	for (int i = 0; i < (length); i++)
 	{
-		for (int j = 0; j < length; j++) 
-		{
+		for (int j = 0; j < (length); j++) {
+
 			unsigned int pixel = base + (4 * i * size) + (4 * j);
-			for (int a = 0; a < 3; a++)
-			{ 
+
+			for (unsigned int a = 0; a <= 3; a++)
+			{
 				rawpixels[pixel + a] = colores[a];
 			}
 		}
 	}
+
+
 }
 
 void Menu::switchPage(ALLEGRO_EVENT ev)
@@ -699,7 +733,7 @@ void Menu::save(std::string encoded, std::string filename) {
 	for (int i = 0; i < 4; i++)
 		filename.pop_back(); //Borro la extensión .png del nombre de los archivos.
 
-	std::ofstream file(this->dirPath + "\\" + filename + FILEEXT);
+	std::ofstream file(this->dirPath + "\\" + filename + FILEEXT, std::ofstream::trunc); //Si ya se codeó antes, lo sobreescribimos.
 	file << encoded;
 	file.close();
 }

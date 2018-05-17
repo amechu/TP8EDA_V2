@@ -53,8 +53,8 @@ public:
 	void loopDecoder(ALLEGRO_EVENT_QUEUE * evq);
 	bool decode();
 
-	void encdDecoder(std::ifstream&  encdfile,int length,unsigned char * rawpixels, int x, int y, int size );
-	void colorear(std::ifstream& encdfile, int length, unsigned char * rawpixels, unsigned char * colores, int x, int y, int size);
+	void encdDecoder(std::ifstream&  encdfile,int length,vector<unsigned char>& rawpixels, int x, int y, int size );
+	void colorear(std::ifstream& encdfile, int length, vector<unsigned char>& rawpixels, unsigned char * colores, int x, int y, int size);
 
 	void drawSuccess() { drawer.drawSuccess(); }
 	void drawError() { drawer.drawError(); }
