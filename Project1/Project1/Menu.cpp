@@ -321,10 +321,14 @@ bool Menu::encode()
 	Image* img;
 	std::string encoded;
 
+	this->loadingScreenEncoding("Preparing images..");
+
 	for (Page* page : imgpages) {
 		for (Image* img : page->images) {
-			if (img != nullptr && img->getSelectValue())
+			if (img != nullptr && img->getSelectValue()) {
+				img->prepareImage();
 				toEncode.push_back(img);
+			}
 		}
 	}
 
@@ -334,6 +338,8 @@ bool Menu::encode()
 		img = toEncode.back();
 		filename = (toEncode.back())->getName();
 		toEncode.pop_back();
+
+		this->loadingScreenEncoding(img->getName());
 
 		encoded += quadtree(img->pixels, img->getWidth());
 		string aux = (to_string(img->getWidth())+"\n");
@@ -353,7 +359,7 @@ std::string Menu::quadtree(std::vector<unsigned char> pixels, unsigned side)
 	//Si llegue aca, es porque branchie.
 	returnVal += 'B';
 
-	for (int i = 0; i < side / 4; i++) { //Calculo maximos y minimos
+	for (int i = 0; i < pixels.size(); i = i+4) { //Calculo maximos y minimos
 		if (pixels[i] > Mr)
 			Mr = pixels[i];
 		if (pixels[i] < mr)
@@ -380,9 +386,9 @@ std::string Menu::quadtree(std::vector<unsigned char> pixels, unsigned side)
 			Mg += pixels[j + 1];
 			Mb += pixels[j + 2];
 		}
-		Mr /= side / 4;
-		Mg /= side / 4;
-		Mb /= side / 4;
+		Mr = Mr / (side / 4.0);
+		Mg = Mg / (side / 4.0);
+		Mb = Mb / (side / 4.0);
 		//Meto el color de la subimagen al string
 		returnVal += Mr;
 		returnVal += Mg;
@@ -556,12 +562,12 @@ bool Menu::decode()
 		unsigned char * rawpixels = (unsigned char *)malloc(4 * length * length);
 		this->encdDecoder(codedfile, length, rawpixels, 0, 0, length);
 
-		std::string tempName = encd->getName();
+		std::string tempName = this->dirPath + "\\" + encd->getName();
 
 		for (int i = 0; i < 5; i++)
 			tempName.pop_back(); //Así elimino la extensión
 
-		tempName += "new.png";
+		tempName += "DECODED.png";
 			
 		lodepng_encode32_file(tempName.c_str(), rawpixels, length, length);
 
@@ -693,7 +699,7 @@ void Menu::save(std::string encoded, std::string filename) {
 	for (int i = 0; i < 4; i++)
 		filename.pop_back(); //Borro la extensión .png del nombre de los archivos.
 
-	std::ofstream file(filename + FILEEXT);
+	std::ofstream file(this->dirPath + "\\" + filename + FILEEXT);
 	file << encoded;
 	file.close();
 }

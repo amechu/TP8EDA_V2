@@ -18,8 +18,7 @@ int main(int argc, char*argv[]) {
 
 		mainMenu.setParserError(parser.Read(argc, argv));					//Se fija si hubo
 		mainMenu.setFilesystemError(fileReader.load(parser.getPath()));		//algun error a lo largo del
-		//mainMenu.setImageError(mainMenu.loadImages(& fileReader));						//seteo inicial del programa
-		//mainMenu.setENCDError(mainMenu.loadENCD(&fileReader));							//y si lo hay, lo carga
+		mainMenu.getPath(parser.getPath());
 		mainMenu.getThreshold(parser.getThreshold());
 		mainMenu.loadAllegroClass(&allClass);
 

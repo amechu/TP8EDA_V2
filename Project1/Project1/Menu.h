@@ -9,6 +9,9 @@ class allegro_c;
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <string>
+
+using namespace std;
 
 enum class menuError { BAD_PARSER, BAD_FILEREADER, BAD_IMAGE, BAD_ENCD , NO_ERROR};
 
@@ -34,7 +37,8 @@ public:
 	void setENCDError(bool error);
 	void setState(menuState state_);
 	void setError(menuError error_);
-	void getThreshold(unsigned threshold_) { threshold = threshold_; }
+	void getThreshold(unsigned threshold_) { this->threshold = threshold_; }
+	void getPath(std::string path_) { this->dirPath = path_; }
 	void loadAllegroClass(allegro_c * alClass_);
 
 	void checkError();
@@ -44,6 +48,7 @@ public:
 	bool encode();
 	void save(std::string encoded, std::string filename);
 	void loadingScreen() { this->drawer.loadingScreen();  }
+	void loadingScreenEncoding(std::string img) { this->drawer.loadingScreenEncoding(img); }
 	std::string quadtree(std::vector<unsigned char> pixels, unsigned side);
 	void loopDecoder(ALLEGRO_EVENT_QUEUE * evq);
 	bool decode();

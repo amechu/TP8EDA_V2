@@ -28,6 +28,7 @@ public:
 	std::string getName();
 	bool error = false; //Si hubo error con la imagen
 	std::vector<unsigned char> pixels; //Vector de pixeles de la imagen
+	void prepareImage(); //hace la imagen cuadrada y potencia de dos
 	
 private:
 	
@@ -49,10 +50,7 @@ private:
 	void destroyBitmap(); /*Destruye el bitmap con allegro, utiliza el path*/
 
 	void decodeImage(); /*Pasandole a la funcion decode de lodepng el vector de pixeles "pixels",
-	el ancho "width", el alto "height" y el filepath "path" a la imagen, te devuelve el ancho, el alto de la imagen
-	y el vector de pixeles lleno.*/
-
-	
-
+						el ancho "width", el alto "height" y el filepath "path" a la imagen, te devuelve el ancho, el alto de la imagen
+						y el vector de pixeles lleno.*/
 };
 
